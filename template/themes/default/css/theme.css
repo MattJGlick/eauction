@@ -814,6 +814,17 @@ form {
 width:100%;
 }
 
+form.input_text[type=submit] {
+	padding:3px 18px !important;
+	display:inline-block;
+	background: transparent url(../images/icons/search.png) no-repeat left left !important;
+	border:none !important;
+	-moz-box-shadow:none !important;
+	-webkit-box-shadow:none !important;
+	box-shadow:none !important;
+	border-radius: 0px 3px 3px 0px !important;
+}
+
 form.search input[type=submit] {
 	padding:3px 18px !important;
 	display:inline-block;
