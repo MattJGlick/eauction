@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * index.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: Login prompt and public landing page
  * 

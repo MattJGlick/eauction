@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * includes/footer.inc.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: Page footer
  * 

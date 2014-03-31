@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * includes/config.inc.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: A place to store configuration variables and constants for the system.
  * 

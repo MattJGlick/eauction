@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * includes/db.inc.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: Connects to the MySQL database
  * 

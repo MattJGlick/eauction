@@ -1,7 +1,7 @@
 /* ************************************************************************************************
  * template/js/pass.transaction.js
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: Gets details for a transaction in a table
  * 

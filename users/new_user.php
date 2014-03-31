@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * floor/check_on.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: Check a guest onto the floor.
  * 
@@ -47,7 +47,7 @@ $messages = formatMessages();
 		<select>
 			<option value="male">Male</option>
 			<option value="female">Female</option>
-		</select>
+		</select><br/>
 
 		Annual Income:<br/>
 		<input id="annual_income" name="annual_income" type="text" class="text"/><br /><br />

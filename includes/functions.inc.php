@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * includes/functions.inc.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: Global system functions
  * 

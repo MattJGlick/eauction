@@ -2,7 +2,7 @@
 /* ************************************************************************************************
  * ajax/api.php
  * 
- * @author: Ani Channarasappa (ani@channarasappa.com)
+ * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
  * @description: API for internal AJAX queries
  * 					
