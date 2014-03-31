@@ -12,6 +12,7 @@ $page_title = "Dashboard";
 
 require_once 'includes/php.header.inc.php';
 require_once 'includes/html.header.inc.php';
+$_SESSION['user']['theme'] = 'default';
 
 $user_id = $_SESSION['user']['id'];
 
