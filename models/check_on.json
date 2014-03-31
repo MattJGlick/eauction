@@ -1,0 +1,76 @@
+{
+	"person_search_form": {
+		"rules": {
+			"search": {
+				"minlength": "3",
+				"maxlength": "200"
+			}
+		},
+		"messages": {
+			"search": {
+				"minlength": "Your search must consist of at least 3 characters.",
+				"maxlength": "Your search can be no longer than 200 characters."
+			}
+		}
+	},
+	"bulk_search_confirm_form": {
+		"rules": {
+			"passes": {
+				"digits": "true",
+				"max": "400"
+			},
+			"pass_list_id": {
+				"digits": "true"
+			}
+		},
+		"messages": {
+			"passes": {
+				"max": "You many only check on 400 passes or less in a single transaction.",
+				"digits": "Enter a valid number of passes."
+			},
+			"pass_list_id": {
+				"digits": "Enter a valid PASS List ID number."
+			}
+		}
+	},
+	"person_search_confirm_form": {
+		"rules": {
+			"person_id": {
+				"digits": "true"
+			},
+			"minors": {
+				"digits": "true",
+				"max": "3"
+			},
+			"barcode": {
+				"digits": "true",
+				"max": "999999",
+				"min": "105"
+			},
+			"binder_slot": {
+				"digits": "true",
+				"max": "9999",
+				"min": "0"
+			}
+		},
+		"messages": {
+			"person_id": {
+				"digits": "Enter a valid ID number."
+			},
+			"minors": {
+				"digits": "Enter a number.",
+				"max": "You can not check on more than 2 minors with a single transaction."
+			},
+			"barcode": {
+				"digits": "Enter a integer barcode.",
+				"max": "The barcode you have entered is aboove the valid range.",
+				"min": "The barcode you have entered is below the valid range."
+			},
+			"binder_slot": {
+				"digits": "Enter a number.",
+				"max": "The binder slot you have entered is above the valid range.",
+				"min": "The binder slot you have entered is below the valid range."
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+{
+	"profile_search_form": {
+		"rules": {
+			"search": {
+				"minlength": "3",
+				"maxlength": "200"
+			},
+			"user_id": {
+				"digits": "true"
+			},
+			"person_id": {
+				"digits": "true"
+			}
+		},
+		"messages": {
+			"search": {
+				"minlength": "Your search must consist of at least 3 characters.",
+				"maxlength": "Your search can be no longer than 200 characters."
+			},
+			"user_id": {
+				"digits": "Enter a valid User ID to lookup."
+			},
+			"person_id": {
+				"digits": "Enter a valid Person ID to lookup."
+			}
+		}
+	}
+}

@@ -1,0 +1,72 @@
+{
+	"profile_search_form": {
+		"rules": {
+			"search": {
+				"minlength": "3",
+				"maxlength": "200"
+			},
+			"pass_list_id": {
+				"digits": "true"
+			}
+		},
+		"messages": {
+			"search": {
+				"minlength": "Your search must consist of at least 3 characters.",
+				"maxlength": "Your search can be no longer than 200 characters."
+			},
+			"pass_list_id": {
+				"digits": "Enter a valid PASS List ID number."
+			}
+		}
+	},
+	"add_pass_list": {
+		"rules": {
+			"name": {},
+			"type": {},
+			"passes": {
+				"digits": "true",
+				"min": "-1"
+			},
+			"finale_passes": {
+				"digits": "true",
+				"min": "-1"
+			}
+		},
+		"messages": {
+			"name": {},
+			"type": {},
+			"passes": {
+				"digits": "Enter a valid number of passes.",
+				"min": "Enter a positive number of passes."
+			},
+			"finale_passes": {
+				"digits": "Enter a valid number of finale passes.",
+				"min": "Enter a positive number of finale passes."
+			}
+		}
+	},
+	"edit_pass_list": {
+		"rules": {
+			"type": {},
+			"passes": {
+				"digits": "true",
+				"min": "-1"
+			},
+			"finale_passes": {
+				"digits": "true",
+				"min": "-1"
+			}
+		},
+		"messages": {
+			"type": {},
+			"passes": {
+				"digits": "Enter a valid number of passes.",
+				"min": "Enter a positive number of passes."
+			},
+			"finale_passes": {
+				"digits": "Enter a valid number of finale passes.",
+				"min": "Enter a positive number of finale passes."
+			}
+		}
+	}
+}

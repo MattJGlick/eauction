@@ -1,0 +1,73 @@
+{
+    "barcode_search_form": {
+        "rules": {
+            "barcode": {
+                "digits": "true",
+                "max": "999999",
+                "min": "105"
+            },
+            "confirmed_barcode": {
+                "digits": "true",
+                "max": "999999",
+                "min": "105"
+            },
+            "id_returned": {}
+        },
+        "messages": {
+            "barcode": {
+                "digits": "Enter a integer barcode.",
+                "max": "The barcode you have entered is above the valid range.",
+                "min": "The barcode you have entered is below the valid range."
+            },
+            "confirmed_barcode": {
+                "digits": "Enter a integer barcode.",
+                "max": "The barcode you have entered is above the valid range.",
+                "min": "The barcode you have entered is below the valid range."
+            },
+            "id_returned": {}
+        }
+    },
+    "bulk_exit_confirmation": {
+        "rules": {
+            "passes": {
+                "digits": "true",
+                "min": "0",
+                "max": "400"
+            },
+            "pass_list_name": {
+                "minlength": "3",
+                "maxlength": "200"
+            },
+            "group_id": {
+                "digits": "true"
+            }
+        },
+        "messages": {
+            "passes": {
+                "min": "You may only check off a positive number of passes.",
+                "max": "You many only check off 400 passes or less in a single transaction.",
+                "digits": "Enter a valid number of passes."
+            },
+            "pass_list_name": {
+                "minlength": "Your search must consist of at least 3 characters.",
+                "maxlength": "Your search can be no longer than 200 characters."
+            },"group_id": {
+                "digits": "Enter a valid group ID number."
+            }
+        }
+    },
+    "bulk_exit_search": {
+		"rules": {
+            "pass_list_search": {
+                "minlength": "3",
+                "maxlength": "200"
+            }
+        },
+        "messages": {
+            "pass_list_search": {
+                "minlength": "Your search must consist of at least 3 characters.",
+                "maxlength": "Your search can be no longer than 200 characters."
+            }
+        }
+    }
+}

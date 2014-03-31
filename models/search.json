@@ -1,0 +1,22 @@
+{
+	"external_search": {
+		"rules": {
+			"search": {
+				"minlength": "3",
+				"maxlength": "200"
+			},
+			"id": {
+				"digits": "true"
+			}
+		},
+		"messages": {
+			"search": {
+				"minlength": "Your search must consist of at least 3 characters.",
+				"maxlength": "Your search can be no longer than 200 characters."
+			},
+			"id": {
+				"digits": "Enter a valid PASS List ID number."
+			}
+		}
+	}
+}
