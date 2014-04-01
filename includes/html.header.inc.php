@@ -248,7 +248,7 @@ $.ajaxSetup({
 					<a onClick=" document.login.submit();" title="Login using a E-Auction account." class="button">Login</a>
 					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
 				<?php } else { ?>
-					<div id="user"><?php echo $_SESSION['user']['name'];?></div>
+					<div id="user"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
 				<?php } ?>
 			</form>
 		</div>

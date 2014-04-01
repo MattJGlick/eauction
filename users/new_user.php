@@ -94,6 +94,7 @@ if(isset($request['submit']))
 
 		$_SESSION['user']['id'] = $row['seller_id'];
 		$_SESSION['user']['name'] = $request['first_name']." ".$request['last_name'];
+		$_SESSION['user']['username'] = $request['username'];
 		message('success','You have successfully registered!');
 	}
 }
