@@ -237,15 +237,19 @@ $.ajaxSetup({
 		<div class="header_div"></div>
 
 
-		<!-- <div id="anonymous_user"><?php echo $_SESSION['user']['name'];?></div>  -->
+		
 
 		<div id="logo_background">
 			<div id="logo" onclick="location.href='<?php echo PATH.'index.php'?>';"></div>
 			<form class="login" name="login" method="post" action="<?php echo PATH.'index.php?action=login'?>">
-				<input id="username" name="username" type="username" class="text"/>
-				<input id="password" name="password" type="password" class="text"/>
-				<a onClick=" document.login.submit();" title="Login using a E-Auction account." class="button">Login</a>
-				<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
+				<?php if(!isset($_SESSION['user']['id'])) { ?>
+					<input id="username" name="username" type="username" class="text"/>
+					<input id="password" name="password" type="password" class="text"/>
+					<a onClick=" document.login.submit();" title="Login using a E-Auction account." class="button">Login</a>
+					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
+				<?php } else { ?>
+					<div id="user"><?php echo $_SESSION['user']['name'];?></div>
+				<?php } ?>
 			</form>
 		</div>
 	</div>

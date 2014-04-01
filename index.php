@@ -21,7 +21,6 @@ require_once 'includes/html.header.inc.php';
 $action = (isset($_GET['action'])) ? sanitize($_GET['action']) : false;
 
 $_SESSION['user']['theme'] = 'default';
- 
 
 require 'includes/footer.inc.php';
 

@@ -503,31 +503,6 @@ function query($sql, $parameters=false, $logging=true) {
 		$sql_debug = $sql;
 	}
 	
-	
-	
-	if ($logging) {
-	
-		$time = microtime(true)-$time;
-		$time = $time*100000;
-		$rows = 'N/A';
-		
-		$_SESSION['debug']['sql'][] = array('query' => $sql_debug, 'time' => $time, 'rows' => $rows);
-		
-		// Insert query text of INSERT or UPDATE queries into database
-		if ((strstr($sql_debug,'UPDATE') || strstr($sql_debug,'INSERT')) && (!strstr($sql_debug,'UPDATE users'))) {
-
-			
-			$log_sql = "INSERT INTO sqlLog
-						(query, ip) 
-						VALUES (:query, :ip)";
-			$log_query = $db->prepare($log_sql);
-			$log_query->bindValue(':query', $sql_debug);
-			$log_query->bindValue(':ip', 	$_SERVER['REMOTE_ADDR']);
-			$log_query->execute();
-			
-		}
-		
-	}
 	$query->execute();
     return $query;
 
