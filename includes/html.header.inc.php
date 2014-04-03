@@ -245,10 +245,10 @@ $.ajaxSetup({
 				<?php if(!isset($_SESSION['user']['id'])) { ?>
 					<input id="username" name="username" type="username" class="text"/>
 					<input id="password" name="password" type="password" class="text"/>
-					<a onClick=" document.login.submit();" title="Login using a E-Auction account." class="button">Login</a>
+					<a onClick=" document.login.submit();" title="Login using an E-Auction account." class="button">Login</a>
 					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
 				<?php } else { ?>
-					<div id="user"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
+					<div id="user" onclick="location.href='<?php echo PATH.'users/view_user.php';?>';"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
 				<?php } ?>
 			</form>
 		</div>
