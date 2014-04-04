@@ -4,8 +4,7 @@
  * 
  * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
- * @description: Header for pages that require authenticated users. This only includes the HTML
- * portion of the original header page.
+ * @description: Header for pages that require authenticated users.
  * 
  * ************************************************************************************************/
 
