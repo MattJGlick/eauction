@@ -15,8 +15,6 @@ require '../includes/html.header.inc.php';
 // Validate and initialize inputs
 $request = $_REQUEST;
 
-header( 'Location: http://www.google.com' ) ;
-
 if(isset($request['submit']))
 {
 	$success = 1;
@@ -97,15 +95,16 @@ if(isset($request['submit']))
 		$_SESSION['user']['id'] = $row['seller_id'];
 		$_SESSION['user']['name'] = $request['first_name']." ".$request['last_name'];
 		$_SESSION['user']['username'] = $request['username'];
-		message('success','You have successfully registered!');
 	}
 }
 
-// Format messages for display
-$messages = formatMessages();
+if($_SESSION['user']['id'] != NULL)
+{
+	message('success','You have successfully registered!');
+}
 
-?>
-<?php echo (isset($messages)) ? $messages : '';
+$messages = formatMessages();
+echo (isset($messages)) ? $messages : '';
 
 if($_SESSION['user']['id'] == NULL)
 {
@@ -146,6 +145,5 @@ if($_SESSION['user']['id'] == NULL)
 
 <?php
 }
-
 	require '../includes/footer.inc.php';
 ?>
