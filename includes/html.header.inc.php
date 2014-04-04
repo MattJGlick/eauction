@@ -18,6 +18,41 @@ require_once 'functions.inc.php';
 require_once 'config.inc.php';
 // Check if current user is allowed to view this page
  
+$request = $_REQUEST;
+ 
+if (isset($request['action']))
+{
+	if($request['action'] == 'login')
+	{
+		$sql = "SELECT * FROM sellers WHERE username = :username";
+		$params = array(':username' => $request['username']);
+		$result = query($sql,$params);
+		$row = fetch($result);
+		
+		// hash the password
+		$password = md5($request['password']);
+		
+		if($password != $row['password'])
+		{
+			// username or password is incorrect
+			$success = 0;
+			message('error','This username or password is incorrect! Please enter a valid username and password.');
+		}
+		else
+		{
+			$_SESSION['user']['id'] = $row['seller_id'];	
+			$_SESSION['user']['username'] = $request['username'];
+
+			$sql = "SELECT * FROM people WHERE seller_id = seller_id";
+			$params = array(':seller_id' => $request['seller_id']);
+			$result = query($sql,$params);
+			$row = fetch($result);
+			
+			$_SESSION['user']['name'] = $row['first_name']." ".$row['last_name'];
+		}
+	}
+} 
+ 
 ?>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
     "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
