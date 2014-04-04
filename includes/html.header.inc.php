@@ -249,6 +249,7 @@ $.ajaxSetup({
 					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
 				<?php } else { ?>
 					<div id="user"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
+					
 				<?php } ?>
 			</form>
 		</div>
@@ -262,7 +263,8 @@ $.ajaxSetup({
 				<a href="<?php echo PATH?>management/permissions.php">Permissions</a>
 				<a href="<?php echo PATH?>management/requests.php">Requests</a>
 				<a href="<?php echo PATH?>management/requests_log.php">Requests Log</a>
-				<a href="<?php echo PATH?>management/database.php">Database</a>			
+				<a href="<?php echo PATH?>management/database.php">Database</a>
+				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
