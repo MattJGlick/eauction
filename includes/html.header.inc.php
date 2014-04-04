@@ -243,8 +243,8 @@ $.ajaxSetup({
 			<div id="logo" onclick="location.href='<?php echo PATH.'index.php'?>';"></div>
 			<form class="login" name="login" method="post" action="<?php echo PATH.'index.php?action=login'?>">
 				<?php if(!isset($_SESSION['user']['id'])) { ?>
-					<input id="username" name="username" type="username" class="text"/>
-					<input id="password" name="password" type="password" class="text"/>
+					<input id="username" name="username" type="username" class="text" placeholder="Username"/>
+					<input id="password" name="password" type="password" class="text"  placeholder="Password"/>
 					<a onClick=" document.login.submit();" title="Login using an E-Auction account." class="button">Login</a>
 					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
 				<?php } else { ?>
@@ -266,4 +266,6 @@ $.ajaxSetup({
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
-	<div id="content">        
+	<div id="content">   
+
+	     
