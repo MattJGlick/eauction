@@ -1,10 +1,8 @@
 <?php 
 /* ************************************************************************************************
- * floor/check_on.php
+ * users/new_user.php
  * 
  * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Check a guest onto the floor.
  * 
  * ************************************************************************************************/
 $page_title = "User Registration";
@@ -95,50 +93,58 @@ if(isset($request['submit']))
 		$_SESSION['user']['id'] = $row['seller_id'];
 		$_SESSION['user']['name'] = $request['first_name']." ".$request['last_name'];
 		$_SESSION['user']['username'] = $request['username'];
+	}
+}
+
+if(isset($_SESSION['user']['id']))
+{
+	if($_SESSION['user']['id'] != NULL)
+	{
 		message('success','You have successfully registered!');
 	}
 }
 
-// Format messages for display
 $messages = formatMessages();
+echo (isset($messages)) ? $messages : '';
 
-?>
-<?php echo (isset($messages)) ? $messages : '';?>
+if(!isset($_SESSION['user']['id']))
+{
+	?>
+		<div class="section_description">Please Complete the User Registration Form Below.</div>
+		<div class="section_content">
+			<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+				Username: <br/>
+				<input id="username" name="username" type="text" class="text"/><br />
+				Password:<br/>
+				<input id="password" name="password" type="password" class="text"/><br />
+				Confirm Password:<br/>
+				<input id="confirm_password" name="confirm_password" type="password" class="text"/><br /><br/>
+				First Name:<br/>
+				<input id="first_name" name="first_name" type="text" class="text"/><br />
+				Last Name:<br/>
+				<input id="last_name" name="last_name" type="text" class="text"/><br />
+				Email:<br/>
+				<input id="email" name="email" type="text" class="text"/><br />
+				Phone Number:<br/>
+				<input id="phone_number" name="phone_number" type="text" class="text"/><br /><br/>
+				Age:<br/>
+				<input id="age" name="age" type="text" class="text"/><br />
+				Gender:<br />
+				<input id="gender" name="gender" type="text" class="text"/><br />
+				<!--<select>
+					<option value="male">Male</option>
+					<option value="female">Female</option>
+				</select><br/> -->
 
-<div class="section_description">Please Complete the User Registration Form Below.</div>
-<div class="section_content">
-	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-		Username: <br/>
-		<input id="username" name="username" type="text" class="text"/><br />
-		Password:<br/>
-		<input id="password" name="password" type="password" class="text"/><br />
-		Confirm Password:<br/>
-		<input id="confirm_password" name="confirm_password" type="password" class="text"/><br /><br/>
-		First Name:<br/>
-		<input id="first_name" name="first_name" type="text" class="text"/><br />
-		Last Name:<br/>
-		<input id="last_name" name="last_name" type="text" class="text"/><br />
-		Email:<br/>
-		<input id="email" name="email" type="text" class="text"/><br />
-		Phone Number:<br/>
-		<input id="phone_number" name="phone_number" type="text" class="text"/><br /><br/>
-		Age:<br/>
-		<input id="age" name="age" type="text" class="text"/><br />
-		Gender:<br />
-		<input id="gender" name="gender" type="text" class="text"/><br />
-		<!--<select>
-			<option value="male">Male</option>
-			<option value="female">Female</option>
-		</select><br/> -->
+				Annual Income:<br/>
+				<input id="annual_income" name="annual_income" type="text" class="text"/><br /><br />
 
-		Annual Income:<br/>
-		<input id="annual_income" name="annual_income" type="text" class="text"/><br /><br />
+				<input name="submit" type="submit" value="Submit"/>
+			
+			</form>
+		</div>
 
-		<input name="submit" type="submit" value="Submit"/>
-	
-	</form>
-</div>
-
-<?php
+	<?php
+}
 	require '../includes/footer.inc.php';
 ?>

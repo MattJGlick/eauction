@@ -4,8 +4,7 @@
  * 
  * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
- * @description: Header for pages that require authenticated users. This only includes the HTML
- * portion of the original header page.
+ * @description: Header for pages that require authenticated users.
  * 
  * ************************************************************************************************/
 
@@ -18,6 +17,41 @@ require_once 'db.inc.php';
 require_once 'functions.inc.php';
 require_once 'config.inc.php';
 // Check if current user is allowed to view this page
+ 
+$request = $_REQUEST;
+ 
+if (isset($request['action']))
+{
+	if($request['action'] == 'login')
+	{
+		$sql = "SELECT * FROM sellers WHERE username = :username";
+		$params = array(':username' => $request['username']);
+		$result = query($sql,$params);
+		$row = fetch($result);
+		
+		// hash the password
+		$password = md5($request['password']);
+		
+		if($password != $row['password'])
+		{
+			// username or password is incorrect
+			$success = 0;
+			message('error','This username or password is incorrect! Please enter a valid username and password.');
+		}
+		else
+		{
+			$_SESSION['user']['id'] = $row['seller_id'];	
+			$_SESSION['user']['username'] = $request['username'];
+
+			$sql = "SELECT * FROM people WHERE seller_id = seller_id";
+			$params = array(':seller_id' => $request['seller_id']);
+			$result = query($sql,$params);
+			$row = fetch($result);
+			
+			$_SESSION['user']['name'] = $row['first_name']." ".$row['last_name'];
+		}
+	}
+} 
  
 ?>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
@@ -243,13 +277,17 @@ $.ajaxSetup({
 			<div id="logo" onclick="location.href='<?php echo PATH.'index.php'?>';"></div>
 			<form class="login" name="login" method="post" action="<?php echo PATH.'index.php?action=login'?>">
 				<?php if(!isset($_SESSION['user']['id'])) { ?>
-					<input id="username" name="username" type="username" class="text"/>
-					<input id="password" name="password" type="password" class="text"/>
-					<a onClick=" document.login.submit();" title="Login using a E-Auction account." class="button">Login</a>
+					<input id="username" name="username" type="username" class="text" placeholder="Username"/>
+					<input id="password" name="password" type="password" class="text"  placeholder="Password"/>
+					<a onClick=" document.login.submit();" title="Login using an E-Auction account." class="button">Login</a>
 					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
 				<?php } else { ?>
+<<<<<<< HEAD
 					<div id="user"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
 					
+=======
+					<div id="user" onclick="location.href='<?php echo PATH.'users/view_user.php';?>';"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
+>>>>>>> f88c40f95212b6bf38ca435ef64759f8cd954a8b
 				<?php } ?>
 			</form>
 		</div>
@@ -268,4 +306,6 @@ $.ajaxSetup({
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
-	<div id="content">        
+	<div id="content">   
+
+	     
