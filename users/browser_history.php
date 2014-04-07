@@ -1,13 +1,13 @@
 <?php 
 /* ************************************************************************************************
- * users/new_address.php
+ * users/browser_history.php
  * 
  * @author: Matt Glick (matt.j.glick@gmail.com)
  * 
- * @description: Allow user to submit an address
+ * @description: browsing history of the current user
  * 
  * ************************************************************************************************/
-$page_title = "Add Address";
+$page_title = "Item Browsing History";
 $body_type =  $page_title;
 
 require '../includes/html.header.inc.php';
@@ -15,55 +15,56 @@ require '../includes/html.header.inc.php';
 // Validate and initialize inputs
 $request = $_REQUEST;
 
-if(isset($request['submit']))
+$sql = "SELECT * FROM browsing_history WHERE 
+			buyer = :buyer_id";
+$params = array('buyer_id' => $_SESSION['user']['id']);
+$result = query($sql,$params);
+
+if(fetch($result,'count') != 0)
 {
-	$success = 1;
-
-	if(!is_numeric($request['zip_code']))	
+	while ($view = fetch($result)) 
 	{
-		// phone number is bad
-		$success = 0;
-		message('error','Please only user numbers in the zip code area');
-	}
-
-
-	if($success)
-	{
-		$sql = "INSERT INTO addresses
-					(seller_id, street, city, state, zip_code)
-				VALUES
-					(:seller_id, :street, :city, :state, :zip_code);";
-		$params = array(':seller_id' => $_SESSION['user']['id'], ':street' => $request['street'],
-						':city' => $request['city'], ':state' => $request['state'],
-						':zip_code' => $request['zip_code']);
-		$result = query($sql,$params);
-
-		message('success','You have added an address!');		
+		$views[] = $view;
 	}
 }
 
 $messages = formatMessages();
 echo (isset($messages)) ? $messages : ''; ?>
 
-	<div class="section_description">Please add an address below.</div>
-	<div class="section_content">
-		<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-			Street:<br/>
-			<input id="street" name="street" type="text" class="text"/><br />
-			City:<br/>
-			<input id="city" name="city" type="text" class="text"/><br />
-			State:<br/>
-			<input id="state" name="state" type="text" class="text"/><br />			
-			Zip Code:<br/>
-			<input id="zip_code" name="zip_code" type="text" class="text"/><br />						
+<div class="section_content">
+	<div class="section_title">Previous Orders</div>
+	<div class="section_title_divider"></div>				
+		<div class="section_content">
+			<table cellspacing="0">
+				<?php
+				if(isset($views))
+				{
+					$count = 1;
 
-			<input name="submit" type="submit" value="Submit"/>
-		</form>
-	</div>
+					foreach($views as $view)
+					{
+						$sql = "SELECT * FROM items WHERE 
+									item_id = :item_id";
+						$params = array('item_id' => $view['item_id']);
+						$result = query($sql,$params);
+						$item = fetch($result);
 
-	<div>
-		<a href="<?php echo PATH.'users/view_user.php'; ?>">Return to User Profile</a>
+						?>
+
+						<tr class="tooltip_right">
+							<td colspan="2"><b><?php echo $count ?></b></td>
+							<td id="floor_total"><?php echo "Item: ".$item['name'] ?></td>
+						</tr>
+
+						<?php
+						$count++;
+					}
+				}
+				?>
+			</table> 
+		</div>					
 	</div>
+</div>
 
 <?
 require '../includes/footer.inc.php';

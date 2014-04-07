@@ -139,7 +139,7 @@ if(!isset($_SESSION['user']['id']))
 				Annual Income:<br/>
 				<input id="annual_income" name="annual_income" type="text" class="text"/><br /><br />
 
-				<input name="submit" type="submit" value="Submit"/>
+				<br /><input name="submit" type="submit" value="Submit"/>
 			
 			</form>
 		</div>
