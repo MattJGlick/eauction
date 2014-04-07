@@ -294,7 +294,7 @@ $.ajaxSetup({
 			<div class="navigation_header">Items</div>
 				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
 			<div class="navigation_header">Profile</div>
-				<a href="<?php echo PATH?>items/view_user.php">View Profile</a>
+				<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
 				<a href="<?php echo PATH?>users/order_history.php">Order History</a>
 				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
 				<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
