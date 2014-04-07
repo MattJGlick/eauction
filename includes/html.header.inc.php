@@ -303,6 +303,7 @@ $.ajaxSetup({
 				<a href="<?php echo PATH?>management/requests_log.php">Requests Log</a>
 				<a href="<?php echo PATH?>management/database.php">Database</a>
 				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
+				<a href="<?php echo PATH?>items/view_item.php">View Item</a>
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
