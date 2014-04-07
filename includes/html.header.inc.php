@@ -43,8 +43,8 @@ if (isset($request['action']))
 			$_SESSION['user']['id'] = $row['seller_id'];	
 			$_SESSION['user']['username'] = $request['username'];
 
-			$sql = "SELECT * FROM people WHERE seller_id = seller_id";
-			$params = array(':seller_id' => $request['seller_id']);
+			$sql = "SELECT * FROM people WHERE seller_id = :seller_id";
+			$params = array(':seller_id' => $row['seller_id']);
 			$result = query($sql,$params);
 			$row = fetch($result);
 			
@@ -282,12 +282,7 @@ $.ajaxSetup({
 					<a onClick=" document.login.submit();" title="Login using an E-Auction account." class="button">Login</a>
 					<a onClick="location.href='<?php echo PATH.'users/new_user.php';?>';" title="Register an E-Auction account." class="button">Sign Up</a>
 				<?php } else { ?>
-<<<<<<< HEAD
-					<div id="user"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
-					
-=======
 					<div id="user" onclick="location.href='<?php echo PATH.'users/view_user.php';?>';"><?php echo $_SESSION['user']['name']." - ".$_SESSION['user']['username'];?></div>
->>>>>>> f88c40f95212b6bf38ca435ef64759f8cd954a8b
 				<?php } ?>
 			</form>
 		</div>

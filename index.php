@@ -14,7 +14,6 @@ $body_type =  $page_title;
 require 'includes/db.inc.php';
 require 'includes/functions.inc.php';
 require 'includes/config.inc.php';
-require_once 'includes/html.header.inc.php';
 
 @session_start(); 
 $request = $_REQUEST;
@@ -27,9 +26,12 @@ if(isset($request['action']))
 {
 	if($request['action'] == 'logout')
 	{
-		$_SESSION['user']['id'] = NULL;
+		unset($_SESSION['user']['id']);
 	}
 }
+
+require_once 'includes/html.header.inc.php';
+
 
 require 'includes/footer.inc.php';
 

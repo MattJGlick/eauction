@@ -19,7 +19,7 @@ if(isset($request['submit']))
 {
 	$success = 1;
 
-	if(!is_numeric($request['zip']))	
+	if(!is_numeric($request['zip_code']))	
 	{
 		// phone number is bad
 		$success = 0;
@@ -42,8 +42,6 @@ if(isset($request['submit']))
 	}
 }
 
-die(var_dump($_SESSION['user']));
-
 $messages = formatMessages();
 echo (isset($messages)) ? $messages : ''; ?>
 
@@ -57,10 +55,14 @@ echo (isset($messages)) ? $messages : ''; ?>
 			State:<br/>
 			<input id="state" name="state" type="text" class="text"/><br />			
 			Zip Code:<br/>
-			<input id="state" name="state" type="text" class="text"/><br />						
+			<input id="zip_code" name="zip_code" type="text" class="text"/><br />						
 
-				<input name="submit" type="submit" value="Submit"/>
+			<input name="submit" type="submit" value="Submit"/>
 		</form>
+	</div>
+
+	<div>
+		<a href="<?php echo PATH.'users/view_user.php'; ?>">Return to User Profile</a>
 	</div>
 
 <?
