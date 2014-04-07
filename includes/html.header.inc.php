@@ -291,14 +291,13 @@ $.ajaxSetup({
 	<div id="dialog"></div>
 	<div id="container">
 		<div id="navigation">
-			<div class="navigation_header">System</div>
-				<a href="<?php echo PATH?>management/configure.php">Configure</a>
-				<a href="<?php echo PATH?>management/permissions.php">Permissions</a>
-				<a href="<?php echo PATH?>management/requests.php">Requests</a>
-				<a href="<?php echo PATH?>management/requests_log.php">Requests Log</a>
-				<a href="<?php echo PATH?>management/database.php">Database</a>
+			<div class="navigation_header">Items</div>
 				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
-				<a href="<?php echo PATH?>items/view_item.php">View Item</a>
+			<div class="navigation_header">Profile</div>
+				<a href="<?php echo PATH?>items/view_user.php">View Profile</a>
+				<a href="<?php echo PATH?>user/order_history.php">Order History</a>
+				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
+				<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
