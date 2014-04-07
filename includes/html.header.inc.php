@@ -298,6 +298,7 @@ $.ajaxSetup({
 				<a href="<?php echo PATH?>users/order_history.php">Order History</a>
 				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
 				<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
+				<a href="<?php echo PATH?>bidding/bid.php">Place Bid</a>
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 

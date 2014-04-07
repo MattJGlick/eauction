@@ -15,18 +15,36 @@ require '../includes/html.header.inc.php';
 // Format messages for display
 $messages = formatMessages();
 
-$sql = "SELECT * FROM items WHERE seller_id = :seller_id";
+$sql = "SELECT * FROM items WHERE seller_id = 3";
 $params = array(':seller_id' => $_SESSION['user']['id']);
 $result = query($sql,$params);
-$row = fetch($result);
+$items = fetch($result);
 
-// select the largest current bid
+// select current bid
+$sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = 1";
+$params = array(':buyer_id' => $_SESSION['user']['id']);
+$result = query($sql,$params);
+$maxBid = fetch($result);
 
-if(!is_numeric($request['bid']))	
+$success = 0;
+
+if(isset($request['submit']))
 {
-	// bid is bad
-	$success = 0;
-	message('error','Invalid bid entry. Only enter a number.');
+	$success = 1;
+
+	if(!is_numeric($request['amount']))	
+	{
+		// bid is not correct format
+		$success = 0;
+		message('error','Invalid bid entry. Only enter a number.');
+	}
+	
+	if($request['amount'] <= (1.05*$maxBid['amount']))
+	{
+		// bid does not exceed current bid
+		$success = 0;
+		message('error','Invalid bid. Bid must exceed the current bid');
+	}
 }
 
 // make sure entered bid is greater than current bid
@@ -34,12 +52,12 @@ if(!is_numeric($request['bid']))
 if($success)
 {
 	// insert them into the seller table
-	$sql = "INSERT INTO bids
-			(amount, bid_date, bid_id, bid_type, buyer_id, item_id)
-			VALUES
-			(:amount, :bid_date, :bid_id, :bid_type, :buyer_id, :item_id);";
-	$params = array('bid_id' => $_SESSION['bid']['id']);
-	$result = query($sql,$params);
+	//$sql = "INSERT INTO bids
+	//		(amount, bid_date, bid_id, bid_type, buyer_id, item_id)
+	//		VALUES
+	//		(:amount, :bid_date, :bid_id, :bid_type, :buyer_id, :item_id);";
+	//$params = array('bid_id' => $_SESSION['bid']['id']);
+	//$result = query($sql,$params);
 }
 
 ?>
@@ -47,20 +65,20 @@ if($success)
 
 <div class="section_content">
 	<body>
-		<h1 style="font-size: 150%;"><b><?php echo $row['name']; ?></b></h1><br>
+		<h1 style="font-size: 150%;"><b><?php echo $items['name']; ?></b></h1><br>
 		<h1><b>Description:</b>
-			<?php echo $row['description']; ?></h1><br>
+			<?php echo $items['description']; ?></h1><br>
 		<h1><b>Buy It Now Price:</b>
-			<?php echo $row['bin_price']; ?></h1><br>
+			<?php echo $items['bin_price']; ?></h1><br>
 		<h1><b>Current Bid:</b>
-			<?php echo $row['description']; ?></h1><br>	
+			<?php echo $maxBid['amount']; ?></h1><br>	
 	</body>
 </div>
 
 <div class="section_content">
 	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		Bid:
-		<input id="bid" name="bid" type="text" class="text"/><br /><br />
+		<input id="amount" name="amount" type="text" class="text"/><br /><br />
 
 		<input name="submit" type="submit" value="Submit"/>
 	
