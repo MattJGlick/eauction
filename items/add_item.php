@@ -36,6 +36,21 @@ if(isset($request['submit']))
 
 	if($success)
 	{
+		date_default_timezone_set('America/New_York'); 
+		$join_date = date("Y-m-d H:i:s");
+		
+		$sql = "INSERT INTO items
+				(seller_id, name, description, start_date, location, bin_price,reserve_price,url)
+			   VALUES
+				(:seller_id,:name,:description,:start_date,:location,:bin_price,:reserve_price,:url);";
+		//need to get seller ID!!
+		$params = array(':seller_id' => $_SESSION['user']['id'],':name'=> $request['itemName'],':description'=>$request['desc'],':start_date'=>$join_date,
+		':location'=>$request['LOI'],':bin_price'=>$request['BIN'],':reserve_price'=>$request['reservePrice'],':url'=> '');
+		
+		$result = query($sql,$params);		
+	
+	
+	
 		message('success','You have created a new item!');
 	}
 }
