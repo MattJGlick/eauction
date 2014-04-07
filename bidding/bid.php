@@ -12,8 +12,8 @@ $body_type =  $page_title;
 
 require '../includes/html.header.inc.php';
 
-// Format messages for display
-$messages = formatMessages();
+$request = $_REQUEST;
+
 
 $sql = "SELECT * FROM items WHERE seller_id = 3";
 $params = array(':seller_id' => $_SESSION['user']['id']);
@@ -38,27 +38,27 @@ if(isset($request['submit']))
 		$success = 0;
 		message('error','Invalid bid entry. Only enter a number.');
 	}
-	
-	if($request['amount'] <= (1.05*$maxBid['amount']))
+	else if($request['amount'] <= (1.05*$maxBid['amount']))
 	{
-		// bid does not exceed current bid
+		// bid does not exceed current bid by 5%
 		$success = 0;
-		message('error','Invalid bid. Bid must exceed the current bid');
+		message('error','Invalid bid. Bid must exceed the current bid by 5%');
+	}
+	
+	if($success)
+	{
+		// insert them into the seller table
+		//$sql = "INSERT INTO bids
+		//		(amount, bid_date, bid_id, bid_type, buyer_id, item_id)
+		//		VALUES
+		//		(:amount, :bid_date, :bid_id, :bid_type, :buyer_id, :item_id);";
+		//$params = array('bid_id' => $_SESSION['bid']['id']);
+		//$result = query($sql,$params);
 	}
 }
 
-// make sure entered bid is greater than current bid
-
-if($success)
-{
-	// insert them into the seller table
-	//$sql = "INSERT INTO bids
-	//		(amount, bid_date, bid_id, bid_type, buyer_id, item_id)
-	//		VALUES
-	//		(:amount, :bid_date, :bid_id, :bid_type, :buyer_id, :item_id);";
-	//$params = array('bid_id' => $_SESSION['bid']['id']);
-	//$result = query($sql,$params);
-}
+// Format messages for display
+$messages = formatMessages();
 
 ?>
 <?php echo (isset($messages)) ? $messages : '';?>
