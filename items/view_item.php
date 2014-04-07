@@ -58,7 +58,8 @@ $maxBid = fetch($result);
 			<?php echo $maxBid['amount']; ?></h1><br>
 			
 		<div class="buttons"> 
-			<br/><a class="button" href="<?php echo PATH.'bidding/bid.php'; ?>">Place Bid</a>
+			<?php $link = 'bidding/bid.php?item_id='.$request['item_id']; ?>
+			<br/><a class="button" href="<?php echo PATH.$link; ?>">Place Bid</a>
 		</div>	
 			
 	</body>

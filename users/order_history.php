@@ -37,6 +37,11 @@ echo (isset($messages)) ? $messages : ''; ?>
 	<div class="section_title_divider"></div>				
 		<div class="section_content">
 			<table cellspacing="0">
+				<tr>
+					<th>Count</th>
+					<th>Item Name</th>
+				</tr>
+
 				<?php
 				if(isset($orders))
 				{
@@ -53,8 +58,8 @@ echo (isset($messages)) ? $messages : ''; ?>
 						?>
 
 						<tr class="tooltip_right">
-							<td colspan="2"><b><?php echo $count ?></b></td>
-							<td id="floor_total"><?php echo "Item: ".$item['name'] ?></td>
+							<td><b><?php echo $count ?></b></td>
+							<td><?php echo $item['name'] ?></td>
 						</tr>
 
 						<?php
