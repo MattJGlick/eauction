@@ -7,7 +7,7 @@
  * @description: Check a guest onto the floor.
  * 
  * ************************************************************************************************/
-$page_title = "Add Auction Item";
+$page_title = "Search Items";
 $body_type =  $page_title;
 
 require '../includes/html.header.inc.php';
@@ -24,7 +24,8 @@ if(isset($request['submit']))
 
 	if($success)
 	{
-		
+		$sql = "SELECT * FROM items WHERE name = :name";
+		$params = array(':name' =>
 	}
 }
 
@@ -40,16 +41,21 @@ $messages = formatMessages();
 		Search Categories:  <br/>
 		<input id="categories" name="categories" type="text" class="text"/><br />
 		
-	
-
-		Search item names:<br />
+		Search Item names:<br />
 		<input id="itemNames" name="itemNames" type="text" class ="text"/><br/>
-		<!--<select>
-			<option value="male">Male</option>
-			<option value="female">Female</option>
-		</select><br/> -->
 
 		<input name="submit" type="submit" value="Submit"/>
+		
+		<?php
+			if(isset($results))
+			{
+				?>
+				
+				
+				<?php
+			}
+			
+			?>
 	
 	</form>
 </div>
