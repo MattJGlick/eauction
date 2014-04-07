@@ -20,6 +20,12 @@ $params = array(':seller_id' => $_SESSION['user']['id']);
 $result = query($sql,$params);
 $row = fetch($result);
 
+// select current bid
+$sql2 = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
+$params2 = array(':buyer_id' => $_SESSION['user']['id']);
+$result2 = query($sql2,$params2);
+$row2 = fetch($result2);
+
 ?>
 <?php echo (isset($messages)) ? $messages : '';?>
 
@@ -30,7 +36,13 @@ $row = fetch($result);
 			<?php echo $row['description']; ?></h1><br>
 		<h1><b>Location:</b>
 			<?php echo $row['location']; ?></h1><br>
-			<button onclick="location.href='<?php echo PATH.'bidding/bid.php';?>';">Place Bid</button>
+		<h1><b>Current Bid:</b>
+			<?php echo $row2['amount']; ?></h1><br>
+			
+		<div class="buttons"> 
+			<br/><a class="button" href="<?php echo PATH.'bidding/bid.php'; ?>">Place Bid</a>
+		</div>	
+			
 	</body>
 </div>
 

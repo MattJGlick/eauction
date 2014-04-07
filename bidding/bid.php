@@ -21,10 +21,6 @@ $result = query($sql,$params);
 $row = fetch($result);
 
 // select the largest current bid
-$sql = "SELECT * FROM bids WHERE buyer_id = :seller_id AND amount = max(amount)";
-$params = array(':seller_id' => $_SESSION['user']['id']);
-$result = query($sql,$params);
-$row2 = fetch($result);
 
 if(!is_numeric($request['bid']))	
 {
