@@ -47,14 +47,32 @@ if(isset($request['submit']))
 	
 	if($success)
 	{
+		$bid_date = date("Y-m-d H:i:s");
+		
 		// insert them into the seller table
-		//$sql = "INSERT INTO bids
-		//		(amount, bid_date, bid_id, bid_type, buyer_id, item_id)
-		//		VALUES
-		//		(:amount, :bid_date, :bid_id, :bid_type, :buyer_id, :item_id);";
-		//$params = array('bid_id' => $_SESSION['bid']['id']);
-		//$result = query($sql,$params);
+		$sql = "INSERT INTO bids
+				(amount, bid_date, bid_type, buyer_id, item_id)
+				VALUES
+				(:amount, :bid_date, :bid_type, :buyer_id, :item_id);";
+		$params = array(':amount' => $request['amount'], ':bid_date' => $bid_date,
+						':bid_type' => 'bid', ':buyer_id' => $_SESSION['user']['id'],
+						':item_id' => $items['item_id']);
+		$result = query($sql,$params);
 	}
+}
+else if(isset($request['BIN']))
+{
+	$bid_date = date("Y-m-d H:i:s");
+
+	// insert them into the seller table
+	$sql = "INSERT INTO bids
+			(amount, bid_date, bid_type, buyer_id, item_id)
+			VALUES
+			(:amount, :bid_date, :bid_type, :buyer_id, :item_id);";
+	$params = array(':amount' => $items['bin_price'], ':bid_date' => $bid_date,
+					':bid_type' => 'Buy it now', ':buyer_id' => $_SESSION['user']['id'],
+					':item_id' => $items['item_id']);
+	$result = query($sql,$params);
 }
 
 // Format messages for display
@@ -68,21 +86,26 @@ $messages = formatMessages();
 		<h1 style="font-size: 150%;"><b><?php echo $items['name']; ?></b></h1><br>
 		<h1><b>Description:</b>
 			<?php echo $items['description']; ?></h1><br>
-		<h1><b>Buy It Now Price:</b>
-			<?php echo $items['bin_price']; ?></h1><br>
-		<h1><b>Current Bid:</b>
-			<?php echo $maxBid['amount']; ?></h1><br>	
-	</body>
-</div>
+		<h1><b>Location:</b>
+			<?php echo $items['location']; ?></h1><br>				
+		<h1><b>Buy It Now Price:</b> $
+			<?php echo $items['bin_price']; ?></h1>
 
-<div class="section_content">
-	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-		Bid:
-		<input id="amount" name="amount" type="text" class="text"/><br /><br />
-
-		<input name="submit" type="submit" value="Submit"/>
-	
+	<form id="BIN_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+		<input name="BIN" type="submit" value="Buy it now"/>
 	</form>
+			
+		<h1><b><br>Current Bid:</b> $
+			<?php echo $maxBid['amount']; ?></h1>	
+	
+	<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+		Bid: $
+		<input id="amount" name="amount" type="text" class="text"/><br />
+
+		<input name="submit_bid" type="submit" value="Submit Bid"/>	
+	</form>	
+	
+	</body>
 </div>
 
 <?php
