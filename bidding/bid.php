@@ -28,7 +28,7 @@ $maxBid = fetch($result);
 
 $success = 0;
 
-if(isset($request['submit']))
+if(isset($request['submit_bid']))
 {
 	$success = 1;
 
@@ -73,6 +73,9 @@ else if(isset($request['BIN']))
 					':bid_type' => 'Buy it now', ':buyer_id' => $_SESSION['user']['id'],
 					':item_id' => $items['item_id']);
 	$result = query($sql,$params);
+	
+	// end auction and insert into auctions complete table
+	
 }
 
 // Format messages for display
