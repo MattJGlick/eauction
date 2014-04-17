@@ -21,15 +21,15 @@ if(isset($request['submit']))
 	if(isset($_SESSION['user']['id']))
 	{
 		date_default_timezone_set('America/New_York'); 
-		$date_browsed = date("Y-m-d H:i:s");
+		$date_searched = date("Y-m-d H:i:s");
 
 		$sql = "INSERT INTO search_history
-					(seller_id, item_id, date_browsed)
+					(seller_id, search, date_searched)
 					VALUES 
-					(:seller_id, :search, :date_browsed)";
+					(:seller_id, :search, :date_searched)";
 		$params = array(':seller_id' => $_SESSION['user']['id'], 
 						':search' => $request['search'], 
-						':date_browsed' => $date_browsed);
+						':date_searched' => $date_searched);
 		$result = query($sql,$params);
 	}
 
@@ -91,7 +91,7 @@ $messages = formatMessages();
 					<?php foreach ($search_results as $search_result) 
 					{?>
 						<tr >
-							<td><a href="<?php echo PATH.'items/view_item.php?item='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
+							<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
 							<td><?php echo $search_result['description']; ?></td>
 							<td><?php echo $search_result['location']; ?></td>
 							<td><?php echo $search_result['bin_price']; ?></td>																					
