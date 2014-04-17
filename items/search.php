@@ -52,11 +52,52 @@ if(isset($request['submit']))
 			{
         		if(!in_array($single_result, $search_results))
         		{
+					$sql = "SELECT lat, lon
+								FROM zips
+								WHERE zip = :zip";
+					$params = array(':zip' => $request['zip']);
+					$zips = query($sql,$params);
+					$zips = fetch($zips);
+
+					$sql = "SELECT lat, lon
+								FROM zips
+								WHERE zip = :zip";
+					$params = array(':zip' => $single_result['location']);
+					$result_zips = query($sql,$params);
+					$result_zips = fetch($result_zips);
+
+        			$lat1 = $result_zips['lat'];
+        			$lat2 = $zips['lat'];
+        			$lon1 = $result_zips['lon'];
+        			$lon2 = $zips['lon'];
+
+    				$theta = $lon1 - $lon2;
+					$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+					$dist = acos($dist);
+					$dist = rad2deg($dist);
+					$single_result['dist'] = $dist;
+
 					$search_results[] = $single_result;
 				}
 			}
 		}
 	}
+
+	function aasort (&$array, $key) {
+	    $sorter=array();
+	    $ret=array();
+	    reset($array);
+	    foreach ($array as $ii => $va) {
+	        $sorter[$ii]=$va[$key];
+	    }
+	    asort($sorter);
+	    foreach ($sorter as $ii => $va) {
+	        $ret[$ii]=$array[$ii];
+	    }
+	    $array=$ret;
+	}
+
+	aasort($search_results, "dist");
 }
 
 // Format messages for display
@@ -70,14 +111,16 @@ $messages = formatMessages();
 	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		Search:<br />
 		<input id="search" name="search" type="text" class ="text"/><br/>
-
+		Enter a Zip Code to Sort By Nearest Location:<br/>
+		(Good test: 82801/54498)<br />
+		<input id="zip" name="zip" type="text" class ="text"/><br/>
 		<input name="submit" type="submit" value="Search"/>
 		
 		<?php
 		if(isset($search_results))
 		{
 			?>
-		
+
 			<br/><br/>
 			<div class="section_title_divider"></div>
 			<div class="section_content">

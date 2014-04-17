@@ -75,7 +75,7 @@ $messages = formatMessages();
 		Buy It Now Price: <br/>
 		<input id="BIN" name="BIN" type="text" class="text"/><br /><br />
 		
-		Location of Item:<br/>
+		Location of Item (Use a ZipCode):<br/>
 		<input id="LOI" name="LOI" type="text" class="text"/><br />
 
 		Description of Item:<br />
