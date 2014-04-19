@@ -110,7 +110,7 @@ echo (isset($messages)) ? $messages : '';
 if(!isset($_SESSION['user']['id']))
 {
 	?>
-		<div class="section_description">Please Complete the User Registration Form Below.</div>
+		<div class="section_description">Please Complete the User Registration Form Below. If this is a company please contact us directly so that we can manually add you to e-Auction.</div>
 		<div class="section_content">
 			<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 				Username: <br/>
