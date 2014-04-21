@@ -19,6 +19,16 @@ if(isset($request['submit']))
 {
 	$success = 1;
 	
+	$varCategory = $_POST['category'];
+	$errorMessage = "";
+	
+	if(($request['category']=="")) 
+	{
+		$success = 0;
+		message('error','You forgot to select your category!');
+	}
+	message('error',$request['category']);
+	
 	if(!is_numeric($request['reservePrice']))	
 	{
 		// bad reserve Price
@@ -77,6 +87,31 @@ $messages = formatMessages();
 		
 		Location of Item (Use a ZipCode):<br/>
 		<input id="LOI" name="LOI" type="text" class="text"/><br />
+		
+		Main Category:
+		<br/>
+		<select name = "category">
+			<option value="">Select Category</option>
+			<option value="Book">Book</option>
+			<option value="Consumer Electronics">Consumer Electronics</option>
+			<option value="Computer & Tablets">Computers & Tablets</option>
+			<option value="DVD & Movies">DVD & Movies</option>
+			<option value="Music">Music</option>
+			<option value="Motor Vehicles">Motor Vehicles</option>
+			<option value="Clothing, Shoes & Accessories">Clothing, Shoes & Accessories</option>
+			<option value="Cell Phone & Accessories">Cell Phones & Accessories</option>
+			<option value="Home & Garden">Home & Garden</option>
+			<option value="Jewelry">Jewelry</option>
+			<option value="Sporting Goods">Sporting Goods</option>
+			<option value="Pet Supplies">Pet Supplies</option>
+			<option value="Tickets">Tickets</option>
+			<option value="Video Games & Consoles">Video Games & Consoles</option>
+			<option value="Toys & Games">Toys & Games</option>
+		</select>
+		
+		
+		
+		<br/>
 
 		Description of Item:<br />
 		<textarea name="desc" id="desc"></textarea>
