@@ -53,6 +53,17 @@ if (isset($request['action']))
 	}
 } 
  
+// check to see what auctions are complete
+$current_date = date("Y-m-d H:i:s");
+
+// select all items that have a start_date of more than two weeks ago and who aren't already complete
+$sql = "SELECT * FROM items I WHERE :current_date > DATE_ADD(start_date, INTERVAL 14 DAY)
+							  AND I.item_id NOT IN (SELECT B.item_id FROM bids B, auctions_complete A 
+							  WHERE A.bid_id = B.bid_id)";
+$params = array(':current_date' => $current_date);
+$result = query($sql,$params);
+$row = fetch($result);
+ 
 ?>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
     "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
