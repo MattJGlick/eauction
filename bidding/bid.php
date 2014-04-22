@@ -101,20 +101,29 @@ $messages = formatMessages();
 		<h1><b>Buy It Now Price:</b> $
 			<?php echo $items['bin_price']; ?></h1>
 
-	<?php if($validBid != false)
-	{ ?>
+	<?php 
+	if($validBid != false)
+	{ 
+	?>
+	
 	<form id="BIN_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		<input name="BIN" type="submit" value="Buy it now"/>
 	    <input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
 
 	</form>
-	<?php } ?>
+	
+	<?php 
+	} 
+	?>
 			
 		<h1><b><br>Current Bid:</b> $
 			<?php echo $maxBid['amount']; ?></h1>	
 	
-	<?php if($validBid != false)
-	{ ?>
+	<?php 
+	if($validBid != false)
+	{ 
+	?>
+	
 	<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		Bid: $
 		<input id="amount" name="amount" type="text" class="text"/><br />
@@ -122,11 +131,18 @@ $messages = formatMessages();
 
 		<input name="submit_bid" type="submit" value="Submit Bid"/>	
 	</form>
-	<?php }
+	
+	<?php 
+	}
 	else
-	{ ?>
+	{ 
+	?>
+	
 	<h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
-	<?php } ?>
+	
+	<?php 
+	} 
+	?>
 	
 	</body>
 </div>
