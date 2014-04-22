@@ -58,12 +58,24 @@ $messages = formatMessages();
 						<th>Age</th>
 						<th>Gender</th>
 						<th>Income</th>
+						<th>Address</th>
 					</tr>
-					<?php foreach ($search_results as $search_result)
+					<?php foreach ($search_results as $search_result){
+						$sql2 = "SELECT * FROM addresses where addresses.seller_id =  :seller_id";
+						$params2 = array(':seller_id'=>$search_result['seller_id']);
+						$results2 = query($sql2,$params2);
+						$search_results2 ="";
+						if($results2->rowCount() !=0)
+						{
+							
+							while($single_results2 = fetch($results2))
+							{
+								$search_results2 .=$single_results2['street']." ".$single_results2['city']." ".$single_results2['state']." ".$single_results2['zip_code']."<br/><br/>";
+							}
+							
+						}
 					
-					
-					
-					{?>
+					?>
 						<tr >
 							<td><?php echo $search_result['first_name']; ?></td>
 							<td><?php echo $search_result['last_name']; ?></td>
@@ -72,6 +84,7 @@ $messages = formatMessages();
 							<td><?php echo $search_result['age']; ?></td>
 							<td><?php echo $search_result['gender']; ?></td>
 							<td><?php echo $search_result['annual_income']; ?></td>
+							<td><?php echo $search_results2; ?></td>
 						</tr>
 					<?php }?>
 				</table>
