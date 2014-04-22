@@ -27,7 +27,7 @@ if(isset($request['submit']))
 		$success = 0;
 		message('error','You forgot to select your category!');
 	}
-	message('error',$request['category']);
+
 	
 	if(!is_numeric($request['reservePrice']))	
 	{
@@ -50,12 +50,12 @@ if(isset($request['submit']))
 		$join_date = date("Y-m-d H:i:s");
 		
 		$sql = "INSERT INTO items
-				(seller_id, name, description, start_date, location, bin_price,reserve_price,url)
+				(seller_id, name, description, start_date, location, bin_price,reserve_price,url,category_id)
 			   VALUES
-				(:seller_id,:name,:description,:start_date,:location,:bin_price,:reserve_price,:url);";
+				(:seller_id,:name,:description,:start_date,:location,:bin_price,:reserve_price,:url,:category_id);";
 		//need to get seller ID!!
 		$params = array(':seller_id' => $_SESSION['user']['id'],':name'=> $request['itemName'],':description'=>$request['desc'],':start_date'=>$join_date,
-		':location'=>$request['LOI'],':bin_price'=>$request['BIN'],':reserve_price'=>$request['reservePrice'],':url'=> '');
+		':location'=>$request['LOI'],':bin_price'=>$request['BIN'],':reserve_price'=>$request['reservePrice'],':url'=> $request['url'],':category_id'=>$request['category']);
 		
 		$result = query($sql,$params);		
 	
@@ -91,34 +91,41 @@ $messages = formatMessages();
 		Main Category:
 		<br/>
 		<select name = "category">
-			<option value="">Select Category</option>
-			<option value="Book">Book</option>
-			<option value="Consumer Electronics">Consumer Electronics</option>
-			<option value="Computer & Tablets">Computers & Tablets</option>
-			<option value="DVD & Movies">DVD & Movies</option>
-			<option value="Music">Music</option>
-			<option value="Motor Vehicles">Motor Vehicles</option>
-			<option value="Clothing, Shoes & Accessories">Clothing, Shoes & Accessories</option>
-			<option value="Cell Phone & Accessories">Cell Phones & Accessories</option>
-			<option value="Home & Garden">Home & Garden</option>
-			<option value="Jewelry">Jewelry</option>
-			<option value="Sporting Goods">Sporting Goods</option>
-			<option value="Pet Supplies">Pet Supplies</option>
-			<option value="Tickets">Tickets</option>
-			<option value="Video Games & Consoles">Video Games & Consoles</option>
-			<option value="Toys & Games">Toys & Games</option>
+		<option value="">Select Category</option>
+		<?php
+		$sql = "SELECT category_id, name FROM categories";
+		$resultCat = query($sql);
+		if($resultCat->rowCount()!=0)
+		{
+			while($single_resultCat = fetch($resultCat))
+			{
+				$search_resultsCats[] = $single_resultCat;
+			}
+		}
+
+		foreach($search_resultsCats as $search_resultCat)
+		{
+		
+		?>
+		
+		
+			<option value=" <?php echo $search_resultCat['category_id']; ?>"><?php echo $search_resultCat['name']; ?></option>
+			
+		
+		<?php
+		}
+		?>
 		</select>
-		
-		
-		
 		<br/>
+		
+		URL of Item:<br/>
+		<input id="url" name="url" type="text" class="text"/><br />
+
 
 		Description of Item:<br />
 		<textarea name="desc" id="desc"></textarea>
-		<!--<select>
-			<option value="male">Male</option>
-			<option value="female">Female</option>
-		</select><br/> -->
+		<br/>
+
 
 		<input name="submit" type="submit" value="Submit"/>
 	

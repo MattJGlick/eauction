@@ -60,6 +60,9 @@ $messages = formatMessages();
 						<th>Income</th>
 					</tr>
 					<?php foreach ($search_results as $search_result)
+					
+					
+					
 					{?>
 						<tr >
 							<td><?php echo $search_result['first_name']; ?></td>
