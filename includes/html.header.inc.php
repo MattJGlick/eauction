@@ -326,6 +326,7 @@ $.ajaxSetup({
 		<div id="navigation">
 			<div class="navigation_header">Items</div>
 				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
+				<a href="<?php echo PATH?>items/bought_items.php">View Bought Items</a>
 			<div class="navigation_header">Profile</div>
 				<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
 				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
