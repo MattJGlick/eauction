@@ -55,14 +55,36 @@ if (isset($request['action']))
  
 // check to see what auctions are complete
 $current_date = date("Y-m-d H:i:s");
+$null_date = "0000-00-00 00:00:00";
 
 // select all items that have a start_date of more than two weeks ago and who aren't already complete
 $sql = "SELECT * FROM items I WHERE :current_date > DATE_ADD(start_date, INTERVAL 14 DAY)
 							  AND I.item_id NOT IN (SELECT B.item_id FROM bids B, auctions_complete A 
 							  WHERE A.bid_id = B.bid_id)";
 $params = array(':current_date' => $current_date);
-$result = query($sql,$params);
-$row = fetch($result);
+$items = query($sql,$params);
+
+if ($items->rowCount() != 0)
+{ 
+	while ($item = fetch($items)) 
+	{
+		// select bid_id of winning bid
+		$sql = "SELECT B.bid_id FROM bids B WHERE B.item_id = :item_id AND
+				B.amount = (SELECT max(B2.amount) FROM bids B2 WHERE item_id = :item_id)";
+		$params = array(':item_id' => $item['item_id']);
+		$result = query($sql, $params);
+		$bid_id = fetch($result);
+		
+		if($bid_id != NULL)
+		{
+			// insert into auctions_complete table
+			$sql = "INSERT INTO auctions_complete(bid_id, date_item_received, date_money_received, date_item_sent, date_money_sent)
+										   VALUES(:bid_id, :nullDate, :nullDate, :nullDate, :nullDate)";
+			$params = array(':bid_id' => $bid_id['bid_id'], ':nullDate' => $null_date);
+			$result = query($sql, $params);
+		}
+	}
+}
  
 ?>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
