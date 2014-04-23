@@ -28,6 +28,7 @@ if(isset($_SESSION['user']['id']))
 			$search_results[] = $single_result;
 		}	
 	}
+	
 }
 
 
@@ -56,14 +57,34 @@ $messages = formatMessages();
 						<th>Description</th>
 						<th>Location</th>						
 						<th>Buy It Now</th>
+						<th>Item Sold?</th>
 					</tr>
-					<?php foreach ($search_results as $search_result) 
-					{?>
+					<?php foreach ($search_results as $search_result)				
+					{
+							$sql2 = "select S.item_id From auctions_complete A, bids B, items S where A.bid_id = B.bid_id and B.item_id = S.item_id and S.seller_id = :seller_id AND S.item_id = :item_id";
+							$params = array(':seller_id'=>$_SESSION['user']['id'],':item_id'=>$search_result['item_id']);
+							$result2 = query($sql2,$params);
+							$result2 = fetch($result2);
+							
+							if($result2 == false)
+							{
+								$bought = "Not Yet!";
+							}
+							else
+							{
+								$bought = "Sold!";							
+							}
+							
+							
+							
+					
+					?>
 						<tr >
 							<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
 							<td><?php echo $search_result['description']; ?></td>
 							<td><?php echo $search_result['location']; ?></td>
-							<td><?php echo $search_result['bin_price']; ?></td>																					
+							<td><?php echo $search_result['bin_price']; ?></td>	
+							<td><?php echo $bought;?></td>
 						</tr>
 					<?php }?>
 				</table>
