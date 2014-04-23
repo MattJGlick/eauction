@@ -22,8 +22,7 @@ if(isset($_SESSION['user']['id']))
 	$sql = "SELECT B.item_id FROM bids B WHERE buyer_id = :user_id
 			AND bid_id IN (SELECT bid_id FROM auctions_complete)";
 	$params = array(':user_id' => $_SESSION['user']['id']);
-	$result = query($sql, $params);
-	$item_id = fetch($result);
+	$item_id = query($sql, $params);
 	
 	if ($item_id->rowCount() != 0)
 	{ 
