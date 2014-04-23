@@ -52,30 +52,33 @@ if(isset($request['submit']))
 			{
         		if(!in_array($single_result, $search_results))
         		{
-					$sql = "SELECT lat, lon
-								FROM zips
-								WHERE zip = :zip";
-					$params = array(':zip' => $request['zip']);
-					$zips = query($sql,$params);
-					$zips = fetch($zips);
+					if(isset($request['zip']))
+					{
+						$sql = "SELECT lat, lon
+									FROM zips
+									WHERE zip = :zip";
+						$params = array(':zip' => $request['zip']);
+						$zips = query($sql,$params);
+						$zips = fetch($zips);
 
-					$sql = "SELECT lat, lon
-								FROM zips
-								WHERE zip = :zip";
-					$params = array(':zip' => $single_result['location']);
-					$result_zips = query($sql,$params);
-					$result_zips = fetch($result_zips);
+						$sql = "SELECT lat, lon
+									FROM zips
+									WHERE zip = :zip";
+						$params = array(':zip' => $single_result['location']);
+						$result_zips = query($sql,$params);
+						$result_zips = fetch($result_zips);
 
-        			$lat1 = $result_zips['lat'];
-        			$lat2 = $zips['lat'];
-        			$lon1 = $result_zips['lon'];
-        			$lon2 = $zips['lon'];
+	        			$lat1 = $result_zips['lat'];
+	        			$lat2 = $zips['lat'];
+	        			$lon1 = $result_zips['lon'];
+	        			$lon2 = $zips['lon'];
 
-    				$theta = $lon1 - $lon2;
-					$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-					$dist = acos($dist);
-					$dist = rad2deg($dist);
-					$single_result['dist'] = $dist;
+	    				$theta = $lon1 - $lon2;
+						$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+						$dist = acos($dist);
+						$dist = rad2deg($dist);
+						$single_result['dist'] = $dist;
+					}
 
 					$search_results[] = $single_result;
 				}
@@ -97,7 +100,10 @@ if(isset($request['submit']))
 	    $array=$ret;
 	}
 
-	aasort($search_results, "dist");
+	if(isset($request['zip']))
+	{
+		aasort($search_results, "dist");
+	}
 }
 
 // Format messages for display
@@ -110,7 +116,7 @@ $messages = formatMessages();
 <div class="section_content">
 	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		Search:<br />
-		<input id="search" name="search" type="text" class ="text"/><br/>
+		<input id="search" name="search" type="text" class ="text" value=<?php echo $request['search'] ?>><br/>
 		Enter a Zip Code to Sort By Nearest Location:<br/>
 		(Good test: 82801/54498)<br />
 		<input id="zip" name="zip" type="text" class ="text"/><br/>
@@ -131,15 +137,23 @@ $messages = formatMessages();
 						<th>Location</th>						
 						<th>Buy It Now</th>
 					</tr>
-					<?php foreach ($search_results as $search_result) 
-					{?>
-						<tr >
-							<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
-							<td><?php echo $search_result['description']; ?></td>
-							<td><?php echo $search_result['location']; ?></td>
-							<td><?php echo $search_result['bin_price']; ?></td>																					
-						</tr>
-					<?php }?>
+					<?php
+					if(count($search_results) == 0)
+					{ ?>
+						<td colspan="4">There are no results to display</td>
+					<?php } 
+					else
+					{	
+						 foreach ($search_results as $search_result) 
+						{?>
+							<tr >
+								<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
+								<td><?php echo $search_result['description']; ?></td>
+								<td><?php echo $search_result['location']; ?></td>
+								<td><?php echo $search_result['bin_price']; ?></td>																					
+							</tr>
+						<?php }
+					}?>
 				</table>
 			</div>			
 			

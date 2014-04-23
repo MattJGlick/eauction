@@ -22,6 +22,11 @@ $request = $_REQUEST;
  
 if (isset($request['action']))
 {
+	if($request['action'] == 'search')
+	{
+	   header( 'Location: http://localhost/eauction/items/search.php?search='.$request['search']."&submit=true") ;
+	}
+
 	if($request['action'] == 'login')
 	{
 		$sql = "SELECT * FROM sellers WHERE username = :username";
@@ -308,6 +313,9 @@ $.ajaxSetup({
 
 		<div id="logo_background">
 			<div id="logo" onclick="location.href='<?php echo PATH.'index.php'?>';"></div>
+			<form class="search_box" name="search_box" method="post" action="<?php echo PATH.'index.php?action=search'?>">
+				<input id="search" name="search" type="search" class="text"  placeholder="Search"/>
+			</form>
 			<form class="login" name="login" method="post" action="<?php echo PATH.'index.php?action=login'?>">
 				<?php if(!isset($_SESSION['user']['id'])) { ?>
 					<input id="username" name="username" type="username" class="text" placeholder="Username"/>
