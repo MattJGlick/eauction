@@ -32,7 +32,7 @@ $messages = formatMessages();
 echo (isset($messages)) ? $messages : ''; ?>
 
 <div class="section_content">
-	<div class="section_title">Previous Orders</div>
+	<div class="section_title">Previous Item Views</div>
 	<div class="section_title_divider"></div>				
 		<div class="section_content">
 			<table cellspacing="0">
