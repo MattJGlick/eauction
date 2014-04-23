@@ -332,15 +332,24 @@ $.ajaxSetup({
 	<div id="dialog"></div>
 	<div id="container">
 		<div id="navigation">
-			<div class="navigation_header">Items</div>
-				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
-				<a href="<?php echo PATH?>items/bought_items.php">View Bought Items</a>
-				<a href="<?php echo PATH?>users/view_seller_item.php">Items Being Sold</a>
-			<div class="navigation_header">Profile</div>
-				<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
-				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
-				<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
-				<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer Report</a>
+			<?php if(isset($_SESSION['user']['id'])) { ?>
+				<div class="navigation_header">Buying</div>
+					<a href="<?php echo PATH?>items/search.php">Search</a>				
+					<a href="<?php echo PATH?>items/bought_items.php">Purchased Items</a>
+					<a href="<?php echo PATH?>users/search_history.php">Search History</a>
+					<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
+				<div class="navigation_header">Selling</div>
+					<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
+					<a href="<?php echo PATH?>users/view_seller_item.php">Your Sales</a>					
+				<div class="navigation_header">Profile</div>
+					<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
+			<?php } ?>
+			<?php if(isset($_SESSION['user']['id'])) { 
+				if($_SESSION['user']['id'] == 7) { ?>
+					<div class="navigation_header">TeleMarketing</div>
+						<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer Report</a>
+				<?php } ?>										
+			<?php } ?>					
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
