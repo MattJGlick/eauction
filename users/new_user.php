@@ -114,30 +114,30 @@ if(!isset($_SESSION['user']['id']))
 		<div class="section_content">
 			<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 				Username: <br/>
-				<input id="username" name="username" type="text" class="text"/><br />
+				<input id="username" name="username" type="text" class="text" value=<?php if(isset($request['username'])) echo $request['username'] ?>><br />
 				Password:<br/>
-				<input id="password" name="password" type="password" class="text"/><br />
+				<input id="password" name="password" type="password" class="text"><br />
 				Confirm Password:<br/>
 				<input id="confirm_password" name="confirm_password" type="password" class="text"/><br /><br/>
 				First Name:<br/>
-				<input id="first_name" name="first_name" type="text" class="text"/><br />
+				<input id="first_name" name="first_name" type="text" class="text" value=<?php if(isset($request['first_name'])) echo $request['first_name'] ?>><br />
 				Last Name:<br/>
-				<input id="last_name" name="last_name" type="text" class="text"/><br />
+				<input id="last_name" name="last_name" type="text" class="text" value=<?php if(isset($request['last_name'])) echo $request['last_name'] ?>><br />
 				Email:<br/>
-				<input id="email" name="email" type="text" class="text"/><br />
+				<input id="email" name="email" type="text" class="text" value=<?php if(isset($request['email'])) echo $request['email'] ?>><br />
 				Phone Number:<br/>
-				<input id="phone_number" name="phone_number" type="text" class="text"/><br /><br/>
+				<input id="phone_number" name="phone_number" type="text" class="text" value=<?php if(isset($request['phone_number'])) echo $request['phone_number'] ?>><br /><br/>
 				Age:<br/>
-				<input id="age" name="age" type="text" class="text"/><br />
+				<input id="age" name="age" type="text" class="text" value=<?php if(isset($request['age'])) echo $request['age'] ?>><br />
 				Gender:<br />
-				<input id="gender" name="gender" type="text" class="text"/><br />
+				<input id="gender" name="gender" type="text" class="text" value=<?php if(isset($request['gender'])) echo $request['gender'] ?>><br />
 				<!--<select>
 					<option value="male">Male</option>
 					<option value="female">Female</option>
 				</select><br/> -->
 
 				Annual Income:<br/>
-				<input id="annual_income" name="annual_income" type="text" class="text"/><br /><br />
+				<input id="annual_income" name="annual_income" type="text" class="text" value=<?php if(isset($request['annual_income'])) echo $request['annual_income'] ?>><br /><br />
 
 				<br /><input name="submit" type="submit" value="Submit"/>
 			
