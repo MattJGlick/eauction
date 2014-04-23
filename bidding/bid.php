@@ -14,17 +14,6 @@ require '../includes/html.header.inc.php';
 
 $request = $_REQUEST;
 
-$sql = "SELECT * FROM items WHERE item_id = :item_id";
-$params = array(':item_id' => $request['item_id']);
-$result = query($sql,$params);
-$items = fetch($result);
-
-// select current bid
-$sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
-$params = array(':item_id' => $request['item_id']);
-$result = query($sql,$params);
-$maxBid = fetch($result);
-
 $success = 0;
 
 if(isset($request['submit_bid']))
@@ -57,6 +46,8 @@ if(isset($request['submit_bid']))
 						':bid_type' => 'bid', ':buyer_id' => $_SESSION['user']['id'],
 						':item_id' => $items['item_id']);
 		$result = query($sql,$params);
+
+		message('success','Bid Placed!');		
 	}
 }
 else if(isset($request['BIN']))
@@ -72,7 +63,22 @@ else if(isset($request['BIN']))
 					':bid_type' => 'Buy it now', ':buyer_id' => $_SESSION['user']['id'],
 					':item_id' => $request['item_id']);
 	$result = query($sql,$params);	
+
+	message('success','You have bought this item!');			
 }	
+
+$sql = "SELECT * FROM items WHERE item_id = :item_id";
+$params = array(':item_id' => $request['item_id']);
+$result = query($sql,$params);
+$items = fetch($result);
+
+// select current bid
+$sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
+$params = array(':item_id' => $request['item_id']);
+$result = query($sql,$params);
+$maxBid = fetch($result);
+
+
 
 // check to see what auctions are complete
 $current_date = date("Y-m-d H:i:s");
