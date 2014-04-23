@@ -59,7 +59,7 @@ echo (isset($messages)) ? $messages : ''; ?>
 
 						<tr class="tooltip_right">
 							<td><b><?php echo $count ?></b></td>
-							<td><?php echo $item['name'] ?></td>
+							<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$item['item_id']?>"><?php echo $item['name'];?></a></td>
 							<td><?php echo $view['date_browsed'] ?></td>
 						</tr>
 
