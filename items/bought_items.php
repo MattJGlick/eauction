@@ -35,21 +35,29 @@ if(isset($_SESSION['user']['id']))
 			$itemInfo = fetch($result);
 		
 			?>
-			<body>
-				<h1 style="font-size: 150%;"><b><?php echo $itemInfo['name']; ?></b></h1><br>
-				<h1><b>Description:</b>
-					<?php echo $itemInfo['description']; ?></h1><br>
-				<h1><b>Location:</b>
-					<?php echo $itemInfo['location']; ?></h1><br>
-			<?php
-			$sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
-			$params = array(':item_id' => $itemInfo['item_id']);
-			$result = query($sql,$params);
-			$maxBid = fetch($result);
-			?>		
-					
-				<h1><b>Winning Bid:</b>
-					<?php echo $maxBid['amount']; ?></h1><br>
+			
+			<div class="section_content">
+				<div class="section_title"><?php echo $itemInfo['name']; ?></div>
+				<div class="section_title_divider"></div>			
+			
+				<body>				
+					<h1><b>Description:</b>
+						<?php echo $itemInfo['description']; ?></h1><br>
+					<h1><b>Location:</b>
+						<?php echo $itemInfo['location']; ?></h1><br>
+				<?php
+				$sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
+				$params = array(':item_id' => $itemInfo['item_id']);
+				$result = query($sql,$params);
+				$maxBid = fetch($result);
+				?>		
+						
+					<h1><b>Winning Bid:</b>
+						<?php echo $maxBid['amount']; ?></h1>
+						
+					<?php $link = 'rating/rating.php?item_id='.$itemInfo['item_id']; ?>
+					<br/><a class="button" href="<?php echo PATH.$link; ?>">Rate This Sale</a><br><br>
+			</div>
 		<?php			
 		}
 	}
