@@ -14,6 +14,17 @@ require '../includes/html.header.inc.php';
 
 $request = $_REQUEST;
 
+$sql = "SELECT * FROM items WHERE item_id = :item_id";
+$params = array(':item_id' => $request['item_id']);
+$result = query($sql,$params);
+$items = fetch($result);
+
+// select current bid
+$sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
+$params = array(':item_id' => $request['item_id']);
+$result = query($sql,$params);
+$maxBid = fetch($result);
+
 $success = 0;
 
 if(isset($request['submit_bid']))
