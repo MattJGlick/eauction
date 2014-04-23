@@ -134,22 +134,36 @@ $messages = formatMessages();
 					<tr>
 						<th>Name</th>
 						<th>Description</th>
-						<th>Location</th>						
+						<th>Location</th>	
+						<th>Number of Bids</th>	
+						<th>End Date</th>							
 						<th>Buy It Now</th>
 					</tr>
 					<?php
 					if(count($search_results) == 0)
 					{ ?>
-						<td colspan="4">There are no results to display</td>
+						<td colspan="6">There are no results to display</td>
 					<?php } 
 					else
 					{	
 						 foreach ($search_results as $search_result) 
-						{?>
+						{
+							$sql = "SELECT COUNT(*)
+										FROM bids
+										WHERE item_id = :item_id";
+							$params = array(':item_id' => $search_result['item_id']);
+							$result = query($sql,$params);
+							$result = fetch($result);
+
+							$end_date = date('Y-m-d', strtotime($search_result['start_date'].' + 2 weeks'));
+
+							?>
 							<tr >
 								<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
 								<td><?php echo $search_result['description']; ?></td>
 								<td><?php echo $search_result['location']; ?></td>
+								<td><?php echo $result['COUNT(*)']; ?></td>
+								<td><?php echo $end_date; ?></td>
 								<td><?php echo $search_result['bin_price']; ?></td>																					
 							</tr>
 						<?php }
