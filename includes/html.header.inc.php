@@ -335,12 +335,12 @@ $.ajaxSetup({
 			<div class="navigation_header">Items</div>
 				<a href="<?php echo PATH?>items/add_item.php">Add Items</a>
 				<a href="<?php echo PATH?>items/bought_items.php">View Bought Items</a>
+				<a href="<?php echo PATH?>users/view_seller_item.php">Items Being Sold</a>
 			<div class="navigation_header">Profile</div>
 				<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
 				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
 				<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
 				<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer Report</a>
-				<a href="<?php echo PATH?>users/view_seller_item.php">Items Being Sold</a>
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
