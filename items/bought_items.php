@@ -55,8 +55,22 @@ if(isset($_SESSION['user']['id']))
 					<h1><b>Winning Bid:</b>
 						<?php echo $maxBid['amount']; ?></h1>
 						
-					<?php $link = 'rating/rating.php?item_id='.$itemInfo['item_id']; ?>
-					<br/><a class="button" href="<?php echo PATH.$link; ?>">Rate This Sale</a><br><br>
+					<?php 
+					
+					$sql = "SELECT R.bid_id FROM rating R, bids B 
+							WHERE R.bid_id =  B.bid_id AND B.item_id = :item_id";
+					$params = array(':item_id' => $itemInfo['item_id']);
+					$rating = query($sql, $params);
+					$rating = fetch($rating);
+
+					if($rating == FALSE)
+					{
+					$link = 'rating/rating.php?item_id='.$itemInfo['item_id']; ?>
+					<br/><a class="button" href="<?php echo PATH.$link; ?>">Rate This Sale</a>
+					<?php
+					}
+					?>
+					<br/><br/>
 			</div>
 		<?php			
 		}
