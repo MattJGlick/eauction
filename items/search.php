@@ -138,11 +138,12 @@ $messages = formatMessages();
 						<th>Number of Bids</th>	
 						<th>End Date</th>							
 						<th>Buy It Now</th>
+						<th>Seller Rating</th>						
 					</tr>
 					<?php
 					if(count($search_results) == 0)
 					{ ?>
-						<td colspan="6">There are no results to display</td>
+						<td colspan="7">There are no results to display</td>
 					<?php } 
 					else
 					{	
@@ -157,6 +158,21 @@ $messages = formatMessages();
 
 							$end_date = date('Y-m-d', strtotime($search_result['start_date'].' + 2 weeks'));
 
+							$sql = "SELECT AVG(r.number)
+										FROM rating r, items i, bids b
+										WHERE 
+											b.bid_id = r.bid_id AND
+											b.item_id = i.item_id AND
+											i.seller_id = :seller_id";
+							$params = array(':seller_id' => $search_result['seller_id']);
+							$rating = query($sql,$params);
+							$rating = fetch($rating);
+							die(var_dump($rating));
+							if($rating == NULL)
+								$rating = "Not yet rated.";
+							else
+								$rating = $rating['number'];
+
 							?>
 							<tr >
 								<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$search_result['item_id']?>"><?php echo $search_result['name'];?></a></td>
@@ -165,6 +181,7 @@ $messages = formatMessages();
 								<td><?php echo $result['COUNT(*)']; ?></td>
 								<td><?php echo $end_date; ?></td>
 								<td><?php echo $search_result['bin_price']; ?></td>																					
+								<td><?php echo $rating ?></td>																													
 							</tr>
 						<?php }
 					}?>
