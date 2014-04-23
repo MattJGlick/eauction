@@ -73,9 +73,24 @@ else if(isset($request['BIN']))
 	$params = array(':amount' => $items['bin_price'], ':bid_date' => $bid_date,
 					':bid_type' => 'Buy it now', ':buyer_id' => $_SESSION['user']['id'],
 					':item_id' => $request['item_id']);
-	$result = query($sql,$params);	
+	$result = query($sql,$params);
+	
+	$sql = "SELECT * FROM bids WHERE bid_type = 'buy it now'";
+	$bids = query($sql);
+	
+	if($bids->rowCount() != 0)
+	{
+		while($bid = fetch($bids))
+		{		
+			// insert item into auctions complete table
+			$sql = "INSERT INTO auctions_complete(bid_id, date_item_received, date_money_received, date_item_sent, date_money_sent)
+										   VALUES(:bid_id, :nullDate, :nullDate, :nullDate, :nullDate)";
+			$params = array(':bid_id' => $bid['bid_id'], ':nullDate' => $null_date);
+			$result = query($sql, $params);
 
-	message('success','You have bought this item!');			
+			message('success','You have bought this item!');
+		}
+	}	
 }	
 
 $sql = "SELECT * FROM items WHERE item_id = :item_id";
@@ -101,6 +116,11 @@ $sql = "SELECT * FROM items I WHERE :current_date < DATE_ADD(start_date, INTERVA
 $params = array(':current_date' => $current_date, ':item_id' => $request['item_id']);
 $result = query($sql,$params);
 $validBid = fetch($result);
+
+$sql = "SELECT bid_type FROM bids WHERE bid_type = 'buy it now' AND item_id = :item_id";
+$params = array(':item_id' => $request['item_id']);
+$result = query($sql, $params);
+$bid_type = fetch($result);
 
 // Format messages for display
 $messages = formatMessages();
@@ -138,25 +158,35 @@ $messages = formatMessages();
 	
 	<?php 
 	if($validBid != false)
-	{ 
-	?>
-	
-	<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-		Bid: $
-		<input id="amount" name="amount" type="text" class="text"/><br />
-	    <input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+	{ 	
+		// *************Not getting into this IF statement**************************
+		// did var_dump on $bid_type and it is "buy it now"
+		// idk why it won't go in
+		if($bid_type == "buy it now")
+		{		
+		?>
+			<h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
+		<?php	
+		}
+		else
+		{
+		?>
+			<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+				Bid: $
+				<input id="amount" name="amount" type="text" class="text"/><br />
+				<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
 
-		<input name="submit_bid" type="submit" value="Submit Bid"/>	
-	</form>
-	
+				<input name="submit_bid" type="submit" value="Submit Bid"/>	
+			</form>
+		<?php
+		}	
+		?>
 	<?php 
 	}
 	else
 	{ 
 	?>
-	
-	<h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
-	
+		<h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
 	<?php 
 	} 
 	?>
