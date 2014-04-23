@@ -116,7 +116,7 @@ $messages = formatMessages();
 <div class="section_content">
 	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		Search:<br />
-		<input id="search" name="search" type="text" class ="text" value=<?php echo $request['search'] ?>><br/>
+		<input id="search" name="search" type="text" class ="text" value=<?php if(isset($request['search'])) echo $request['search'] ?>><br/>
 		Enter a Zip Code to Sort By Nearest Location:<br/>
 		(Good test: 82801/54498)<br />
 		<input id="zip" name="zip" type="text" class ="text"/><br/>
