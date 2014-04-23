@@ -42,8 +42,18 @@ if(isset($request['submit']))
 	{
 		$sql = "SELECT *
 					FROM items
-					WHERE name LIKE :search";
-		$params = array(':search' => "%".$word."%");
+					WHERE 
+						name LIKE :search AND
+						bin_price < :price";
+
+		if($request['price'] == "")
+		{
+			$request['price'] = 0;
+		}
+
+		$params = array(':search' => "%".$word."%", ':price' => $request['price']);
+
+		//die(var_dump($params));
 		$result = query($sql,$params);
 
 		if ($result->rowCount() != 0)
@@ -71,7 +81,7 @@ if(isset($request['submit']))
 	        			$lat1 = $result_zips['lat'];
 	        			$lat2 = $zips['lat'];
 	        			$lon1 = $result_zips['lon'];
-	        			$lon2 = $zips['lon'];
+	 	       			$lon2 = $zips['lon'];
 
 	    				$theta = $lon1 - $lon2;
 						$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
@@ -120,6 +130,9 @@ $messages = formatMessages();
 		Enter a Zip Code to Sort By Nearest Location:<br/>
 		(Good test: 82801/54498)<br />
 		<input id="zip" name="zip" type="text" class ="text"/><br/>
+		Max Price:<br/>
+		<input id="price" name="price" type="text" class ="text" value=<?php if(isset($request['price'])) echo $request['price'] ?>><br/>
+
 		<input name="submit" type="submit" value="Search"/>
 		
 		<?php
@@ -167,11 +180,11 @@ $messages = formatMessages();
 							$params = array(':seller_id' => $search_result['seller_id']);
 							$rating = query($sql,$params);
 							$rating = fetch($rating);
-							die(var_dump($rating));
-							if($rating == NULL)
+							//die(var_dump($rating));
+							if($rating['AVG(r.number)'] == NULL)
 								$rating = "Not yet rated.";
 							else
-								$rating = $rating['number'];
+								$rating = $rating['AVG(r.number)'];
 
 							?>
 							<tr >
