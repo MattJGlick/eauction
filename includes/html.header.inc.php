@@ -339,8 +339,8 @@ $.ajaxSetup({
 				<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
 				<a href="<?php echo PATH?>users/search_history.php">Search History</a>
 				<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
-				<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer button</a>
-				<a href="<?php echo PATH?>users/view_seller_item.php">seller item</a>
+				<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer Report</a>
+				<a href="<?php echo PATH?>users/view_seller_item.php">Items Being Sold</a>
 		</div>
 	<div id="page_title"><?php echo $page_title?></div>
 
