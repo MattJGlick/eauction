@@ -33,14 +33,14 @@ if(isset($_SESSION['user']['id']))
 	$result = query($sql,$params);
 }
 
-$sql = "SELECT * FROM items WHERE seller_id = :seller_id";
-$params = array(':seller_id' => $_SESSION['user']['id']);
+$sql = "SELECT * FROM items WHERE item_id = :item_id";
+$params = array(':item_id' => $request['item_id']);
 $result = query($sql,$params);
 $row = fetch($result);
 
 // select current bid
 $sql = "SELECT MAX(amount) AS amount FROM `bids` WHERE item_id = :item_id";
-$params = array(':item_id' => $_REQUEST['item_id']);
+$params = array(':item_id' => $request['item_id']);
 $result = query($sql,$params);
 $maxBid = fetch($result);
 
