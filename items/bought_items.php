@@ -7,7 +7,7 @@
  * @description: Check a guest onto the floor.
  * 
  * ************************************************************************************************/
-$page_title = "Bought Items";
+$page_title = "Purchased Items";
 $body_type =  $page_title;
 
 require '../includes/html.header.inc.php';
@@ -53,8 +53,18 @@ if(isset($_SESSION['user']['id']))
 				?>		
 						
 					<h1><b>Winning Bid:</b>
-						<?php echo $maxBid['amount']; ?></h1>
+						<?php echo $maxBid['amount']; ?></h1><br>
 						
+				<?php
+				$sql = "SELECT * FROM items WHERE category_id = :category_id AND item_id != :item_id";
+				$params = array(':category_id' => $itemInfo['category_id'], ':item_id' => $itemInfo['item_id']);
+				$result = query($sql,$params);
+				$relatedItem = fetch($result);
+				?>
+					
+					<h1><b>You might also like:</b>
+						<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$relatedItem['item_id']?>"><?php echo $relatedItem['name'];?></a></td>
+							
 					<?php 
 					
 					$sql = "SELECT R.bid_id FROM rating R, bids B 
