@@ -75,22 +75,18 @@ else if(isset($request['BIN']))
 					':item_id' => $request['item_id']);
 	$result = query($sql,$params);
 	
-	$sql = "SELECT * FROM bids WHERE bid_type = 'buy it now'";
-	$bids = query($sql);
-	
-	if($bids->rowCount() != 0)
-	{
-		while($bid = fetch($bids))
-		{		
-			// insert item into auctions complete table
-			$sql = "INSERT INTO auctions_complete(bid_id, date_item_received, date_money_received, date_item_sent, date_money_sent)
-										   VALUES(:bid_id, :nullDate, :nullDate, :nullDate, :nullDate)";
-			$params = array(':bid_id' => $bid['bid_id'], ':nullDate' => $null_date);
-			$result = query($sql, $params);
+	$sql = "SELECT bid_id FROM bids WHERE bid_type = 'buy it now' AND item_id = :item_id";
+	$params = array(':item_id' => $request['item_id']);
+	$bids = query($sql,$params);
+	$bids = fetch($bids);
 
-			message('success','You have bought this item!');
-		}
-	}	
+	// insert item into auctions complete table
+	$sql = "INSERT INTO auctions_complete(bid_id, date_item_received, date_money_received, date_item_sent, date_money_sent)
+								   VALUES(:bid_id, :nullDate, :nullDate, :nullDate, :nullDate)";
+	$params = array(':bid_id' => $bids['bid_id'], ':nullDate' => $null_date);
+	$result = query($sql, $params);
+
+	message('success','You have bought this item!');
 }	
 
 $sql = "SELECT * FROM items WHERE item_id = :item_id";
@@ -111,17 +107,17 @@ $current_date = date("Y-m-d H:i:s");
 $null_date = "0000-00-00 00:00:00";
 
 // select all items that have a start_date of more than two weeks ago and who aren't already complete
-$sql = "SELECT * FROM items I WHERE :current_date < DATE_ADD(start_date, INTERVAL 14 DAY)
+$sql = "SELECT * FROM items I WHERE :current_date > DATE_ADD(start_date, INTERVAL 14 DAY)
 							  AND I.item_id = :item_id";
 $params = array(':current_date' => $current_date, ':item_id' => $request['item_id']);
 $result = query($sql,$params);
-$validBid = fetch($result);
+$too_long = fetch($result);
 
-$sql = "SELECT bid_type FROM bids WHERE bid_type = 'buy it now' AND item_id = :item_id";
+$sql = "SELECT * FROM auctions_complete a, bids b WHERE a.bid_id = b.bid_id AND b.item_id = :item_id";
 $params = array(':item_id' => $request['item_id']);
 $result = query($sql, $params);
-$bid_type = fetch($result);
-
+$item_sold = fetch($result);
+//die(var_dump($item_sold));
 // Format messages for display
 $messages = formatMessages();
 
@@ -139,16 +135,15 @@ $messages = formatMessages();
 			<?php echo $items['bin_price']; ?></h1>
 
 	<?php 
-	if($validBid != false)
+	if(!$too_long && !$item_sold)
 	{ 
 	?>
 	
-	<form id="BIN_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-		<input name="BIN" type="submit" value="Buy it now"/>
-	    <input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
-
-	</form>
-	
+		<form id="BIN_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+			<input name="BIN" type="submit" value="Buy it now"/>
+		    <input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+		</form>
+		
 	<?php 
 	} 
 	?>
@@ -157,40 +152,29 @@ $messages = formatMessages();
 			<?php echo $maxBid['amount']; ?></h1>	
 	
 	<?php 
-	if($validBid != false)
-	{ 	
-		// *************Not getting into this IF statement**************************
-		// did var_dump on $bid_type and it is "buy it now"
-		// idk why it won't go in
-		if($bid_type == "buy it now")
-		{		
-		?>
-			<h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
-		<?php	
-		}
-		else
-		{
-		?>
-			<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-				Bid: $
-				<input id="amount" name="amount" type="text" class="text"/><br />
-				<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+	if(!$too_long && !$item_sold)
+	{ 	?>
 
-				<input name="submit_bid" type="submit" value="Submit Bid"/>	
-			</form>
-		<?php
-		}	
-		?>
-	<?php 
+		<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+			Bid: $
+			<input id="amount" name="amount" type="text" class="text"/><br />
+			<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+
+			<input name="submit_bid" type="submit" value="Submit Bid"/>	
+		</form>
+
+
+
+		<?php	
 	}
 	else
-	{ 
+	{
 	?>
-		<h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
+		<br/><h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
 	<?php 
-	} 
+	}
 	?>
-	
+
 	</body>
 </div>
 

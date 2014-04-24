@@ -46,9 +46,16 @@ if(isset($request['submit']))
 						name LIKE :search AND
 						bin_price < :price";
 
-		if($request['price'] == "")
+		if(isset($request['price']))
 		{
-			$request['price'] = 0;
+			if($request['price'] == "")
+			{
+				$request['price'] = 100000000000000000000000000000;
+			}
+		}
+		else
+		{
+			$request['price'] = 100000000000000000000000000000;
 		}
 
 		$params = array(':search' => "%".$word."%", ':price' => $request['price']);
@@ -131,7 +138,7 @@ $messages = formatMessages();
 		(Good test: 82801/54498)<br />
 		<input id="zip" name="zip" type="text" class ="text"/><br/>
 		Max Price:<br/>
-		<input id="price" name="price" type="text" class ="text" value=<?php if(isset($request['price'])) echo $request['price'] ?>><br/>
+		<input id="price" name="price" type="text" class ="text"><br/>
 
 		<input name="submit" type="submit" value="Search"/>
 		
