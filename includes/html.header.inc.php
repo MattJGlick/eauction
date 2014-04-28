@@ -357,7 +357,7 @@ $.ajaxSetup({
 				if($_SESSION['user']['username'] == "admin") { ?>
 					<div class="navigation_header">TeleMarketing</div>
 						<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer Report</a>
-						<a href="<?php echo PATH?>admin/confirm.php">Item Confirmations</a>
+						<a href="<?php echo PATH?>admin/confirmation.php">Item Confirmations</a>
 				<?php } ?>										
 			<?php } ?>					
 		</div>
