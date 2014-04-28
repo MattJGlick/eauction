@@ -343,7 +343,7 @@ $.ajaxSetup({
 			<?php if(isset($_SESSION['user']['id'])) { ?>
 				<div class="navigation_header">Buying</div>
 					<a href="<?php echo PATH?>items/search.php">Search</a>
-					<a href="<?php echo PATH?>items/browse_items?category_id=0.php">Browse Items</a>
+					<a href="<?php echo PATH?>items/browse_items.php?category_id=0">Browse Items</a>
 					<a href="<?php echo PATH?>items/bought_items.php">Purchased Items</a>
 					<a href="<?php echo PATH?>users/search_history.php">Search History</a>
 					<a href="<?php echo PATH?>users/browser_history.php">Browser History</a>
