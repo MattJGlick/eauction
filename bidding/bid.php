@@ -43,6 +43,12 @@ if(isset($request['submit_bid']))
 		$success = 0;
 		message('error','Invalid bid. Bid must exceed the current bid by 5%');
 	}
+	else if($request['amount'] <= $items['reserve_price'])
+	{
+		// bid does not exceed reserve price for this item
+		$success = 0;
+		message('error','Invalid bid. Bid does exceed the reserve price set by the seller');
+	}
 	
 	if($success)
 	{
@@ -130,7 +136,9 @@ $messages = formatMessages();
 		<h1><b>Description:</b>
 			<?php echo $items['description']; ?></h1><br>
 		<h1><b>Location:</b>
-			<?php echo $items['location']; ?></h1><br>				
+			<?php echo $items['location']; ?></h1><br>
+		<h1><b>Reserve Price:</b> $
+			<?php echo $items['reserve_price']; ?></h1><br>
 		<h1><b>Buy It Now Price:</b> $
 			<?php echo $items['bin_price']; ?></h1>
 
