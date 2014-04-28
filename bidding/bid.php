@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * floor/check_on.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Check a guest onto the floor.
- * 
- * ************************************************************************************************/
+
 $page_title = "Place a Bid";
 $body_type =  $page_title;
 
@@ -26,6 +19,7 @@ $result = query($sql,$params);
 $maxBid = fetch($result);
 
 $success = 0;
+$verified = false;
 
 if(isset($request['submit_bid']))
 {
@@ -123,69 +117,99 @@ $sql = "SELECT * FROM auctions_complete a, bids b WHERE a.bid_id = b.bid_id AND 
 $params = array(':item_id' => $request['item_id']);
 $result = query($sql, $params);
 $item_sold = fetch($result);
-//die(var_dump($item_sold));
+
 // Format messages for display
 $messages = formatMessages();
 
 ?>
-<?php echo (isset($messages)) ? $messages : '';?>
+<?php echo (isset($messages)) ? $messages : '';
 
-<div class="section_content">
-	<body>
-		<h1 style="font-size: 150%;"><b><?php echo $items['name']; ?></b></h1><br>
-		<h1><b>Description:</b>
-			<?php echo $items['description']; ?></h1><br>
-		<h1><b>Location:</b>
-			<?php echo $items['location']; ?></h1><br>
-		<h1><b>Reserve Price:</b> $
-			<?php echo $items['reserve_price']; ?></h1><br>
-		<h1><b>Buy It Now Price:</b> $
-			<?php echo $items['bin_price']; ?></h1>
-
-	<?php 
-	if(!$too_long && !$item_sold)
-	{ 
-	?>
+if(isset($request['Login']))
+{
+	// hash the password
+	$password = md5($request['password']);
 	
-		<form id="BIN_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-			<input name="BIN" type="submit" value="Buy it now"/>
-		    <input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
-		</form>
-		
-	<?php 
-	} 
-	?>
-			
-		<h1><b><br>Current Bid:</b> $
-			<?php echo $maxBid['amount']; ?></h1>	
-	
-	<?php 
-	if(!$too_long && !$item_sold)
-	{ 	?>
+	$sql = "SELECT * FROM sellers WHERE username = :username";
+	$params = array(':username' => $_SESSION['user']['username']);
+	$result = query($sql,$params);
+	$row = fetch($result);
 
-		<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-			Bid: $
-			<input id="amount" name="amount" type="text" class="text"/><br />
-			<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
-
-			<input name="submit_bid" type="submit" value="Submit Bid"/>	
-		</form>
-
-
-
-		<?php	
-	}
-	else
+	if($password == $row['password'])
 	{
-	?>
-		<br/><h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
-	<?php 
+		$verified = true;
 	}
-	?>
+}
 
-	</body>
-</div>
+if($verified)
+{?>
 
+	<div class="section_content">
+		<body>
+			<h1 style="font-size: 150%;"><b><?php echo $items['name']; ?></b></h1><br>
+			<h1><b>Description:</b>
+				<?php echo $items['description']; ?></h1><br>
+			<h1><b>Location:</b>
+				<?php echo $items['location']; ?></h1><br>
+			<h1><b>Reserve Price:</b> $
+				<?php echo $items['reserve_price']; ?></h1><br>
+			<h1><b>Buy It Now Price:</b> $
+				<?php echo $items['bin_price']; ?></h1>
+
+		<?php 
+		if(!$too_long && !$item_sold)
+		{ 
+		?>
+		
+			<form id="BIN_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+				<input name="BIN" type="submit" value="Buy it now"/>
+				<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+			</form>
+			
+		<?php 
+		} 
+		?>
+				
+			<h1><b><br>Current Bid:</b> $
+				<?php echo $maxBid['amount']; ?></h1>	
+		
+		<?php 
+		if(!$too_long && !$item_sold)
+		{ 	?>
+
+			<form id="place_bid_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+				Bid: $
+				<input id="amount" name="amount" type="text" class="text"/><br />
+				<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+
+				<input name="submit_bid" type="submit" value="Submit Bid"/>	
+			</form>
+
+
+
+			<?php	
+		}
+		else
+		{
+		?>
+			<br/><h1 style="font-size: 150%;"><b>Auction Closed</b></h1>
+		<?php 
+		}
+		?>
+
+		</body>
+	</div>
 <?php
+}
+else
+{
+?>
+	<form id="enter_password" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+		<h1>Please re-enter your password to proceed to the bidding page. </h1><br/>
+		<input id="password" name="password" type="password" class="text"  placeholder="Password"/>
+		<input type="hidden" id="item_id" name="item_id" value="<?php echo $request['item_id']?>">
+		<input name="Login" type="submit" value="Login"/>
+	</form>		
+<?php
+}
 	require '../includes/footer.inc.php';
 ?>

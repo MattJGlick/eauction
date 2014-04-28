@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * floor/check_on.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Check a guest onto the floor.
- * 
- * ************************************************************************************************/
+
 $page_title = "Add Auction Item";
 $body_type =  $page_title;
 
@@ -14,6 +7,8 @@ require '../includes/html.header.inc.php';
 
 // Validate and initialize inputs
 $request = $_REQUEST;
+
+$verified = false;
 
 if(isset($request['submit']))
 {
@@ -69,69 +64,98 @@ if(isset($request['submit']))
 $messages = formatMessages();
 
 ?>
-<?php echo (isset($messages)) ? $messages : '';?>
+<?php echo (isset($messages)) ? $messages : '';
 
-<div class="section_description">Please Complete the New Auction Item Form Below.</div>
-<div class="section_content">
-	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-		Name of item: <br/>
-		<input id="itemName" name="itemName" type="text" class="text"/><br /><br />
-		
-		<!-- Reserve Price:(Once the bidding has reached the reserve price, the item can be bought by the bidder)<br/> -->
-		Reserve Price: <br/>
-		<input id="reservePrice" name="reservePrice" type="text" class="text"/><br />
-
-		<!--Buy It Now Price: (The price at which the user can buy the item)<br/> -->
-		Buy It Now Price: <br/>
-		<input id="BIN" name="BIN" type="text" class="text"/><br /><br />
-		
-		Location of Item (Use a ZipCode):<br/>
-		<input id="LOI" name="LOI" type="text" class="text"/><br />
-		
-		Main Category:
-		<br/>
-		<select name = "category">
-		<option value="">Select Category</option>
-		<?php
-		$sql = "SELECT category_id, name FROM categories";
-		$resultCat = query($sql);
-		if($resultCat->rowCount()!=0)
-		{
-			while($single_resultCat = fetch($resultCat))
-			{
-				$search_resultsCats[] = $single_resultCat;
-			}
-		}
-
-		foreach($search_resultsCats as $search_resultCat)
-		{
-		
-		?>
-		
-		
-			<option value=" <?php echo $search_resultCat['category_id']; ?>"><?php echo $search_resultCat['name']; ?></option>
-			
-		
-		<?php
-		}
-		?>
-		</select>
-		<br/>
-		
-		URL of Item:<br/>
-		<input id="url" name="url" type="text" class="text"/><br />
-
-
-		Description of Item:<br />
-		<textarea name="desc" id="desc"></textarea>
-		<br/>
-
-
-		<input name="submit" type="submit" value="Submit"/>
+if(isset($request['Login']))
+{
+	// hash the password
+	$password = md5($request['password']);
 	
-	</form>
-</div>
+	$sql = "SELECT * FROM sellers WHERE username = :username";
+	$params = array(':username' => $_SESSION['user']['username']);
+	$result = query($sql,$params);
+	$row = fetch($result);
 
+	if($password == $row['password'])
+	{
+		$verified = true;
+	}
+}
+
+if($verified)
+{?>
+
+	<div class="section_description">Please Complete the New Auction Item Form Below.</div>
+	<div class="section_content">
+		<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+			Name of item: <br/>
+			<input id="itemName" name="itemName" type="text" class="text"/><br /><br />
+			
+			<!-- Reserve Price:(Once the bidding has reached the reserve price, the item can be bought by the bidder)<br/> -->
+			Reserve Price: <br/>
+			<input id="reservePrice" name="reservePrice" type="text" class="text"/><br />
+
+			<!--Buy It Now Price: (The price at which the user can buy the item)<br/> -->
+			Buy It Now Price: <br/>
+			<input id="BIN" name="BIN" type="text" class="text"/><br /><br />
+			
+			Location of Item (Use a ZipCode):<br/>
+			<input id="LOI" name="LOI" type="text" class="text"/><br />
+			
+			Main Category:
+			<br/>
+			<select name = "category">
+			<option value="">Select Category</option>
+			<?php
+			$sql = "SELECT category_id, name FROM categories";
+			$resultCat = query($sql);
+			if($resultCat->rowCount()!=0)
+			{
+				while($single_resultCat = fetch($resultCat))
+				{
+					$search_resultsCats[] = $single_resultCat;
+				}
+			}
+
+			foreach($search_resultsCats as $search_resultCat)
+			{
+			
+			?>
+			
+			
+				<option value=" <?php echo $search_resultCat['category_id']; ?>"><?php echo $search_resultCat['name']; ?></option>
+				
+			
+			<?php
+			}
+			?>
+			</select>
+			<br/>
+			
+			URL of Item:<br/>
+			<input id="url" name="url" type="text" class="text"/><br />
+
+
+			Description of Item:<br />
+			<textarea name="desc" id="desc"></textarea>
+			<br/>
+
+
+			<input name="submit" type="submit" value="Submit"/>
+		
+		</form>
+	</div>
 <?php
+}
+else
+{
+?>
+	<form id="enter_password" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+		<h1>Please re-enter your password in order to add an item. </h1><br/>
+		<input id="password" name="password" type="password" class="text"  placeholder="Password"/>		
+		<input name="Login" type="submit" value="Login"/>
+	</form>	
+<?php	
+}
 	require '../includes/footer.inc.php';
 ?>
