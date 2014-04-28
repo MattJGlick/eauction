@@ -354,9 +354,10 @@ $.ajaxSetup({
 					<a href="<?php echo PATH?>users/view_user.php">View Profile</a>
 			<?php } ?>
 			<?php if(isset($_SESSION['user']['id'])) { 
-				if($_SESSION['user']['id'] == 7) { ?>
+				if($_SESSION['user']['username'] == "admin") { ?>
 					<div class="navigation_header">TeleMarketing</div>
 						<a href="<?php echo PATH?>telemarketers/telemarkets_report.php">Telemarketer Report</a>
+						<a href="<?php echo PATH?>admin/confirm.php">Item Confirmations</a>
 				<?php } ?>										
 			<?php } ?>					
 		</div>
