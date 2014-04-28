@@ -101,6 +101,8 @@ $categories = array_reverse($categories);
 			<?php echo $row['description']; ?></h1><br>
 		<h1><b>Location:</b>
 			<?php echo $row['location']; ?></h1><br>
+		<h1><b>Reserve Price:</b>
+			<?php echo $row['reserve_price']; ?></h1><br>			
 		<h1><b>Current Bid:</b>
 			<?php echo $maxBid['amount']; ?></h1><br>
 			
