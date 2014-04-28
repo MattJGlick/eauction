@@ -88,6 +88,13 @@ if ($items->rowCount() != 0)
 			$params = array(':bid_id' => $bid_id['bid_id'], ':nullDate' => $null_date);
 			$result = query($sql, $params);
 		}
+		else
+		{
+			// auction item was not sold, delete item from items table
+			$sql = "DELETE FROM items WHERE item_id = :item_id";
+			$params = array(':item_id' => $item['item_id']);
+			$result = query($sql, $params);
+		}
 	}
 }
  
