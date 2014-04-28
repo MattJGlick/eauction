@@ -44,12 +44,59 @@ $params = array(':item_id' => $request['item_id']);
 $result = query($sql,$params);
 $maxBid = fetch($result);
 
+$categories[] = $row['category_id'];
+$sql = "SELECT parent_id FROM `categories` WHERE category_id = :category_id";
+$params = array(':category_id' => $row['category_id']);
+$result = query($sql,$params);
+$parent_id = fetch($result);
+$categories[] = $parent_id['parent_id'];
+
+while($parent_id['parent_id'] != 0)
+{
+	$sql = "SELECT parent_id FROM `categories` WHERE category_id = :category_id";
+	$params = array(':category_id' => $parent_id['parent_id']);
+	$result = query($sql,$params);
+	$parent_id = fetch($result);
+	$categories[] = $parent_id['parent_id'];		
+}
+
+$categories = array_reverse($categories);
+
 ?>
 <?php echo (isset($messages)) ? $messages : '';?>
 
 <div class="section_content">
 	<body>
 		<h1 style="font-size: 150%;"><b><?php echo $row['name']; ?></b></h1><br>
+		<h1><b>Category:</b>
+			<?php
+			$count = 0;
+
+			foreach($categories as $category)
+			{
+				$count++;
+
+				if($category != 0)
+				{
+					$sql = "SELECT name FROM `categories` WHERE category_id = :category_id";
+					$params = array(':category_id' => $category);
+					$result = query($sql,$params);
+					$result = fetch($result);
+
+					$sql = "SELECT COUNT(*) FROM `items` WHERE category_id = :category_id";
+					$params = array(':category_id' => $category);
+					$countTotal = query($sql,$params);
+					$countTotal = fetch($countTotal);	
+					$countTotal = $countTotal['COUNT(*)'];
+					
+				 	echo $result['name']."(".$countTotal.")";
+
+				 	if($count >= 1 && $count != count($categories))
+				 		echo " -> ";
+				}
+
+			} ?>
+		 <br><br></h1>
 		<h1><b>Description:</b>
 			<?php echo $row['description']; ?></h1><br>
 		<h1><b>Location:</b>
