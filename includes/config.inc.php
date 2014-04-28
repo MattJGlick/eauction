@@ -1,12 +1,4 @@
 <?php
-/* ************************************************************************************************
- * includes/config.inc.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: A place to store configuration variables and constants for the system.
- * 
- * ************************************************************************************************/
  
 // Script Constants
 define("PATH", 'http://localhost/eauction/'); 										// Path to the system on the network

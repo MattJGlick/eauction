@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * items/search.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Check a guest onto the floor.
- * 
- * ************************************************************************************************/
+
 $page_title = "Search Items";
 $body_type =  $page_title;
 

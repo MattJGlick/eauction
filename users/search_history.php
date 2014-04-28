@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * users/browser_history.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: browsing history of the current user
- * 
- * ************************************************************************************************/
+
 $page_title = "Item Search History";
 $body_type =  $page_title;
 

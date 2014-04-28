@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * users/new_address.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Allow user to submit an address
- * 
- * ************************************************************************************************/
+
 $page_title = "Add Address";
 $body_type =  $page_title;
 

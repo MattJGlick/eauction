@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * users/order_history.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Order history of the current user
- * 
- * ************************************************************************************************/
+
 $page_title = "Order History";
 $body_type =  $page_title;
 

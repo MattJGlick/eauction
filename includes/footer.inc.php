@@ -1,12 +1,4 @@
 <?php
-/* ************************************************************************************************
- * includes/footer.inc.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Page footer
- * 
- * ************************************************************************************************/
 
  ?>
 <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-type="link"></div>

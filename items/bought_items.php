@@ -1,12 +1,5 @@
 <?php 
-/* ************************************************************************************************
- * floor/check_on.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Check a guest onto the floor.
- * 
- * ************************************************************************************************/
+
 $page_title = "Purchased Items";
 $body_type =  $page_title;
 

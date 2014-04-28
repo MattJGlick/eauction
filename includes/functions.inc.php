@@ -1,12 +1,4 @@
 <?php
-/* ************************************************************************************************
- * includes/functions.inc.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Global system functions
- * 
- * ************************************************************************************************/
  
 function getTasks() {
 	

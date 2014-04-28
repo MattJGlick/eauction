@@ -1,12 +1,4 @@
 <?php
-/* ************************************************************************************************
- * includes/header.inc.php
- * 
- * @author: Matt Glick (matt.j.glick@gmail.com)
- * 
- * @description: Header for pages that require authenticated users.
- * 
- * ************************************************************************************************/
 
 $body_type = $page_title;
 //debug($_SESSION['user']);
