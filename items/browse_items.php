@@ -16,7 +16,7 @@ require '../includes/html.header.inc.php';
 $request = $_REQUEST;
 
 if(!isset($request['category_id']))
-	$request['category_id'] = 1;
+	$request['category_id'] = 0;
 
 $search_results = array();
 
