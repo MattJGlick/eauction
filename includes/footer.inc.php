@@ -9,6 +9,9 @@
  * ************************************************************************************************/
 
  ?>
+<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-type="link"></div>
+
+ 
 		</div>
 		<div id="footer">
 			<div class="footer_column" style="text-align:center;">

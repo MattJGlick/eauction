@@ -28,6 +28,8 @@ if(isset($_SESSION['user']['id']))
 	{ 
 		while ($item = fetch($item_id)) 
 		{
+
+
 			//select item info of specific
 			$sql = "SELECT * FROM items WHERE item_id = :item_id";
 			$params = array(':item_id' => $item['item_id']);
@@ -64,6 +66,10 @@ if(isset($_SESSION['user']['id']))
 					
 					<h1><b>You might also like:</b>
 						<td><a href="<?php echo PATH.'items/view_item.php?item_id	='.$relatedItem['item_id']?>"><?php echo $relatedItem['name'];?></a></td>
+
+					<a href="http://www.facebook.com" target="_blank">
+						<img src="http://localhost/eauction/includes/facebook.png" alt="facebook">
+					</a>						
 							
 					<?php 
 					

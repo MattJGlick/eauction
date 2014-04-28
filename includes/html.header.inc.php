@@ -299,6 +299,7 @@ $.ajaxSetup({
  </script>
 </head>
 <body id="<?php echo str_replace(' ','_',strtolower($body_type))?>">
+
 <div id="wrap">
 	<div id="header">
 		<div id="logo_background">
