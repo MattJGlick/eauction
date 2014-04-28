@@ -88,7 +88,7 @@ $messages = formatMessages();
 ?>
 <?php echo (isset($messages)) ? $messages : '';?>
 
-<div class="section_description">Please Complete the Search Form Below.</div>
+<div class="section_description">Please Select a Category Below.</div>
 <div class="section_content">
 	<form id="person_search_form" class="input_text" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 		<?php
