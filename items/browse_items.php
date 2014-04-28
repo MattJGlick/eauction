@@ -32,7 +32,7 @@ else
 				FROM items
 				WHERE 
 				category_id = :category_id
-				OR category_id = (SELECT parent_id FROM categories WHERE category_id = :category_id)";
+				OR category_id = (SELECT category_id FROM categories WHERE parent_id = :category_id)";
 
 	$params = array(':category_id' => $request['category_id']);
 	$items = query($sql,$params);
